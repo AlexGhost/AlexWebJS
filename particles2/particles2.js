@@ -9,27 +9,19 @@ var mouse = { x: width * 0.5, y: height * 0.5 };
 function Particle(x, y) {
 	this.x = x;
 	this.y = y;
-	this.dx = (Math.random() * 2) - 1;
-	this.dy = (Math.random() * 2) - 1;
+	this.dx = (Math.random() * 1) - 0.5;
+	this.dy = (Math.random() * 1) - 0.5;
 }
 
 Particle.prototype.move = function() {
 	if (this.x <= 0)
-	{
 		this.dx = -this.dx;
-	}
 	else if (this.x >= width)
-	{
 		this.dx = -this.dx;
-	}
 	if (this.y <= 0)
-	{
 		this.dy = -this.dy;
-	}
 	else if (this.y >= height)
-	{
 		this.dy = -this.dy;
-	}
 	this.x += this.dx;
 	this.y += this.dy;
 };
@@ -45,39 +37,10 @@ Particle.prototype.draw = function() {
 Particle.prototype.draw_line = function(x2, y2)
 {
 	var distance = Math.sqrt(Math.abs(this.x - x2) * Math.abs(this.x - x2) + Math.abs(this.y - y2) * Math.abs(this.y - y2));
-	if (distance < 200)
+	if (distance < 300)
 	{
 		ctx.beginPath();
-		if (distance < 169)
-			ctx.strokeStyle = "#FFFFFF";
-		else if (distance < 171)
-			ctx.strokeStyle = "#EEEEEE";
-		else if (distance < 173)
-			ctx.strokeStyle = "#DDDDDD";
-		else if (distance < 175)
-			ctx.strokeStyle = "#CCCCCC";
-		else if (distance < 177)
-			ctx.strokeStyle = "#BBBBBB";
-		else if (distance < 179)
-			ctx.strokeStyle = "#AAAAAA";
-		else if (distance < 181)
-			ctx.strokeStyle = "#999999";
-		else if (distance < 183)
-			ctx.strokeStyle = "#888888";
-		else if (distance < 185)
-			ctx.strokeStyle = "#777777";
-		else if (distance < 187)
-			ctx.strokeStyle = "#666666";
-		else if (distance < 189)
-			ctx.strokeStyle = "#555555";
-		else if (distance < 191)
-			ctx.strokeStyle = "#444444";
-		else if (distance < 193)
-			ctx.strokeStyle = "#333333";
-		else if (distance < 195)
-			ctx.strokeStyle = "#222222";
-		else
-			ctx.strokeStyle = "#111111";
+		ctx.strokeStyle = convertHex("#DDFFFF", (300 - distance) * 0.5);
 		ctx.lineWidth = 2;
 		ctx.moveTo(this.x, this.y);
 		ctx.lineTo(x2, y2);
@@ -85,7 +48,17 @@ Particle.prototype.draw_line = function(x2, y2)
 	}
 }
 
-for (var i = 0; i < 200; i++) {
+function convertHex(hex, opacity) {
+	var hex = hex.replace('#','');
+	var r = parseInt(hex.substring(0,2), 16);
+	var g = parseInt(hex.substring(2,4), 16);
+	var b = parseInt(hex.substring(4,6), 16);
+
+	var result = 'rgba('+r+','+g+','+b+','+opacity/200+')';
+	return result;
+}
+
+for (var i = 0; i < 150; i++) {
 	particles[i] = new Particle(Math.random() * width, Math.random() * height);
 }
 
