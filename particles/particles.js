@@ -116,7 +116,6 @@ function frame() {
 	ctx.clearRect(0, 0, width, height);
 	for (var i = 0; i < particles.length; i++) {
 		particles[i].attract(mouse.x, mouse.y);
-		//particles[i].attract(particles[i].x, particles[i].y);
 		particles[i].draw();
 	}
 }
