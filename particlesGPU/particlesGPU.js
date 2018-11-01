@@ -13,7 +13,7 @@ function init() {
 	camera.position.z = 100;
 	scene.add(camera);
 	var geometry = new THREE.Geometry();
-	for (var i = 0 ; i < 500000 ; i++) {
+	for (var i = 0 ; i < 150000 ; i++) {
 		particles[i] = new Particle(Math.random() * 100 - 50 , Math.random() * 100 - 50, 0);
 		geometry.vertices.push(
 		new THREE.Vector3(particles[i].x, particles[i].y));
