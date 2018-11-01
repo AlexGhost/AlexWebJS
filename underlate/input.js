@@ -2,6 +2,7 @@ var keyboard_up = false;
 var keyboard_down = false;
 var keyboard_left = false;
 var keyboard_right = false;
+var keyboard_space = false;
 
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
@@ -16,6 +17,8 @@ function keyDownHandler(e)
 		keyboard_up = true;
 	else if(e.keyCode == 40 || e.keyCode == 83)
 		keyboard_down = true;
+	else if(e.keyCode == 32)
+		keyboard_space = true;
 }
 
 function keyUpHandler(e)
@@ -28,4 +31,6 @@ function keyUpHandler(e)
 		keyboard_up = false;
 	else if(e.keyCode == 40 || e.keyCode == 83)
 		keyboard_down = false;
+	else if(e.keyCode == 32)
+		keyboard_space = false;
 }

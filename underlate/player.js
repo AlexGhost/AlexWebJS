@@ -7,6 +7,7 @@ function Player(x, y) {
 	this.facing_dir = 1;
 	this.is_moving = false;
 	this.timer_movement = .0;
+	this.flies = false;
 }
 
 Player.prototype.move = function(dx, dy) {
@@ -26,14 +27,20 @@ Player.prototype.move = function(dx, dy) {
 		this.is_moving = false;
 		this.timer_movement = .0;
 	}
+
+	//LIMIT
 	if (this.x > 1140)
-		this.x = 1140
+		this.x = 1140;
 	else if (this.x < 60)
 		this.x = 60;
 	if (this.y > 840)
-		this.y = 840
+		this.y = 840;
 	else if (this.y < 60)
 		this.y = 60;
+
+	//FLIES
+	if (this.x > 900 && this.x < 1100 && this.y > 400 && this.y < 600 && !this.flies)
+		this.flies = true;
 }
 
 Player.prototype.draw = function() {
