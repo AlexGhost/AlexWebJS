@@ -4,10 +4,10 @@ player_img.src = "player.png";
 function Player(x, y) {
 	this.x = x;
 	this.y = y;
+	this.flies = 0;
 	this.facing_dir = 1;
 	this.is_moving = false;
 	this.timer_movement = .0;
-	this.flies = false;
 }
 
 Player.prototype.move = function(dx, dy) {
@@ -37,10 +37,6 @@ Player.prototype.move = function(dx, dy) {
 		this.y = 840;
 	else if (this.y < 60)
 		this.y = 60;
-
-	//FLIES
-	if (this.x > 900 && this.x < 1100 && this.y > 400 && this.y < 600 && !this.flies)
-		this.flies = true;
 }
 
 Player.prototype.draw = function() {
