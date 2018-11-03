@@ -37,7 +37,12 @@ function loop()
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	ctx.drawImage(background_img, 0, 0);
 	for (var i = 0 ; i < particles.length ; i++) {
-		particles[i].attract(player.x + (Math.random() * 1000) - 500, player.y + (Math.random() * 1000) - 500);
+		if (player.life > 0)
+			particles[i].attract(player.x + (Math.random() * 1000) - 500,
+				player.y + (Math.random() * 1000) - 500);
+		else
+			particles[i].attract(600 + (Math.random() * 1000) - 500,
+				450 + (Math.random() * 1000) - 500);
 		particles[i].draw();
 	}
 	player.move(-keyboard_left + keyboard_right, -keyboard_up + keyboard_down);

@@ -9,26 +9,33 @@ function Player(x, y) {
 	this.facing_dir = 1;
 	this.is_moving = false;
 	this.timer_movement = .0;
+	this.velocity = -1;
 }
 
 Player.prototype.move = function(dx, dy) {
-		if (player.life > 0) {
-			this.x += dx;
-			this.y += dy;
-			if (dx > 0)
-				this.facing_dir = 1;
-			else if (dx < 0)
-				this.facing_dir = 0;
-			if (dx != 0 || dy != 0) {
-				this.is_moving = true;
-				this.timer_movement += 0.05;
-				if (this.timer_movement > 2)
-					this.timer_movement = .0;
-			}
-			else {
-				this.is_moving = false;
+	if (player.life > 0) {
+		this.x += dx;
+		this.y += dy;
+		if (dx > 0)
+			this.facing_dir = 1;
+		else if (dx < 0)
+			this.facing_dir = 0;
+		if (dx != 0 || dy != 0) {
+			this.is_moving = true;
+			this.timer_movement += 0.05;
+			if (this.timer_movement > 2)
 				this.timer_movement = .0;
 		}
+		else {
+			this.is_moving = false;
+			this.timer_movement = .0;
+		}
+	}
+	else {
+		this.y += this.velocity;
+		this.velocity += .01;
+		if (this.velocity > 10)
+			this.velocity = 10;
 	}
 
 	//LIMIT
@@ -36,10 +43,12 @@ Player.prototype.move = function(dx, dy) {
 		this.x = 1100;
 	else if (this.x < 100)
 		this.x = 100;
-	if (this.y > 770)
+	if (this.y > 770 && player.life > 0)
 		this.y = 770;
-	else if (this.y < 80)
+	else if (this.y < 80 && player.life > 0)
 		this.y = 80;
+	else if (this.y > 1200)
+		this.y = 1200;
 }
 
 Player.prototype.draw = function() {
