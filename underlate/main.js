@@ -9,6 +9,11 @@ var particles = [];
 	particles[i] = new Particle(player.x, player.y);
 }*/
 
+function add_flies() {
+	particles[player.flies] = new Particle(player.x, player.y);
+	player.flies += 1;
+}
+
 fly.respawn();
 function loop()
 {
@@ -20,8 +25,7 @@ function loop()
 	player.move(-keyboard_left + keyboard_right, -keyboard_up + keyboard_down);
 	if (player.x > fly.x - 25 && player.x < fly.x + 25 && player.y > fly.y - 30 && player.y < fly.y + 30) {
 		fly.respawn();
-		particles[player.flies] = new Particle(player.x, player.y);
-		player.flies += 1;
+		add_flies(); add_flies(); add_flies(); add_flies(); add_flies(); add_flies(); add_flies(); add_flies(); add_flies(); add_flies(); add_flies(); add_flies();
 	}
 	fly.draw();
 	player.draw();
