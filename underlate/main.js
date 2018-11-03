@@ -1,6 +1,9 @@
 var canvas = document.getElementById("display");
 var ctx = canvas.getContext("2d");
 
+var background_img = new Image();
+background_img.src = "background.png";
+
 var player = new Player(600, 450);
 var fly = new Fly();
 var enemies = [new Enemy(1), new Enemy(-1), new Enemy(1), new Enemy(-1), new Enemy(1), new Enemy(-1)];
@@ -32,6 +35,7 @@ for (var i = 0; i < enemies.length ; i++)
 function loop()
 {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	ctx.drawImage(background_img, 0, 0);
 	for (var i = 0 ; i < particles.length ; i++) {
 		particles[i].attract(player.x + (Math.random() * 1000) - 500, player.y + (Math.random() * 1000) - 500);
 		particles[i].draw();

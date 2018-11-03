@@ -21,7 +21,7 @@ Particle.prototype.attract = function(x, y) {
 Particle.prototype.draw = function() {
 	ctx.beginPath();
 	ctx.rect(this.x - 3, this.y - 3, 6, 6);
-	ctx.fillStyle = "#FFFFFF";
+	ctx.fillStyle = "#000000";
 	ctx.fill();
 	ctx.closePath();
 };
