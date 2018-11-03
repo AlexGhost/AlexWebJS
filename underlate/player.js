@@ -32,14 +32,14 @@ Player.prototype.move = function(dx, dy) {
 	}
 
 	//LIMIT
-	if (this.x > 1140)
-		this.x = 1140;
-	else if (this.x < 60)
-		this.x = 60;
-	if (this.y > 840)
-		this.y = 840;
-	else if (this.y < 60)
-		this.y = 60;
+	if (this.x > 1100)
+		this.x = 1100;
+	else if (this.x < 100)
+		this.x = 100;
+	if (this.y > 770)
+		this.y = 770;
+	else if (this.y < 80)
+		this.y = 80;
 }
 
 Player.prototype.draw = function() {
