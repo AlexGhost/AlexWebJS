@@ -12,7 +12,7 @@ Enemy.prototype.respawn = function() {
 		this.x = 0;
 	else
 		this.x = 1200;
-	this.y = (Math.random() * 900);
+	this.y = (Math.random() * 900.);
 	this.dx = this.type;
 	this.dy = (Math.random() * 0.5) - 0.25;
 	this.timer = (Math.random() * 10.) + 200.;

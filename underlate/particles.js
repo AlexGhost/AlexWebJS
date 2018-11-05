@@ -19,9 +19,10 @@ Particle.prototype.attract = function(x, y) {
 };
 
 Particle.prototype.draw = function() {
+	ctx.strokeStyle = "#000000";
+	ctx.lineWidth = 4;
 	ctx.beginPath();
-	ctx.rect(this.x - 3, this.y - 3, 6, 6);
-	ctx.fillStyle = "#000000";
-	ctx.fill();
-	ctx.closePath();
+	ctx.moveTo(this.oldX, this.oldY);
+	ctx.lineTo(this.x, this.y);
+	ctx.stroke();
 };
