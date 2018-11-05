@@ -6,8 +6,8 @@ background_img.src = "background.png";
 
 var player = new Player(600, 450);
 var fly = new Fly();
-var enemies = [new Enemy(1), new Enemy(-1), new Enemy(1), new Enemy(-1), new Enemy(1), new Enemy(-1)];
-var nb_enemies = 6;
+var enemies = [];
+var nb_enemies = enemies.length;
 var next_enemy_spawn = 1;
 var particles = [];
 
@@ -36,6 +36,7 @@ function loop()
 {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	ctx.drawImage(background_img, 0, 0);
+	//PARTICLES
 	for (var i = 0 ; i < particles.length ; i++) {
 		if (player.life > 0)
 			particles[i].attract(player.x + (Math.random() * 1000) - 500,
@@ -45,6 +46,7 @@ function loop()
 				450 + (Math.random() * 1000) - 500);
 		particles[i].draw();
 	}
+	//MOVEMENTS
 	player.move(-keyboard_left + keyboard_right, -keyboard_up + keyboard_down);
 	for (var i = 0; i < enemies.length ; i++)
 		enemies[i].move();

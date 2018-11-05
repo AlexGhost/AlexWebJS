@@ -54,22 +54,22 @@ Player.prototype.move = function(dx, dy) {
 Player.prototype.draw = function() {
 	if (this.facing_dir == 1) {
 		if (this.life <= 0)
-			ctx.drawImage(player_img, 480, 0, 160, 200, this.x - 25, this.y - 30, 50, 60);
+			ctx.drawImage(player_img, 480, 0, 160, 199, this.x - 25, this.y - 30, 50, 60);
 		else if (this.is_moving && this.timer_movement > 1)
-			ctx.drawImage(player_img, 320, 0, 160, 200, this.x - 25, this.y - 30, 50, 60);
+			ctx.drawImage(player_img, 320, 0, 160, 199, this.x - 25, this.y - 30, 50, 60);
 		else if (this.is_moving)
-			ctx.drawImage(player_img, 160, 0, 160, 200, this.x - 25, this.y - 30, 50, 60);
+			ctx.drawImage(player_img, 160, 0, 160, 199, this.x - 25, this.y - 30, 50, 60);
 		else
-			ctx.drawImage(player_img, 0, 0, 160, 200, this.x - 25, this.y - 30, 50, 60);
+			ctx.drawImage(player_img, 0, 0, 160, 199, this.x - 25, this.y - 30, 50, 60);
 	}
 	else {
 		if (this.life <= 0)
-			ctx.drawImage(player_img, 480, 200, 160, 200, this.x - 25, this.y - 30, 50, 60);
+			ctx.drawImage(player_img, 480, 200, 160, 199, this.x - 25, this.y - 30, 50, 60);
 		else if (this.is_moving && this.timer_movement > 1)
-			ctx.drawImage(player_img, 320, 200, 160, 200, this.x - 25, this.y - 30, 50, 60);
+			ctx.drawImage(player_img, 320, 200, 160, 199, this.x - 25, this.y - 30, 50, 60);
 		else if (this.is_moving)
-			ctx.drawImage(player_img, 160, 200, 160, 200, this.x - 25, this.y - 30, 50, 60);
+			ctx.drawImage(player_img, 160, 200, 160, 199, this.x - 25, this.y - 30, 50, 60);
 		else
-			ctx.drawImage(player_img, 0, 200, 160, 200, this.x - 25, this.y - 30, 50, 60);
+			ctx.drawImage(player_img, 0, 200, 160, 199, this.x - 25, this.y - 30, 50, 60);
 	}
 }

@@ -3,7 +3,7 @@ function Enemy(type) {
 	this.y = 0;
 	this.dx = 0;
 	this.dy = 0;
-	this.timer = 75.;
+	this.timer = (Math.random() * 60.) + 20.;
 	this.type = type;
 }
 
@@ -15,12 +15,12 @@ Enemy.prototype.respawn = function() {
 	this.y = (Math.random() * 900);
 	this.dx = this.type;
 	this.dy = (Math.random() * 0.5) - 0.25;
-	this.timer = (Math.random() * 5.) + 150.;
+	this.timer = (Math.random() * 10.) + 200.;
 }
 
 Enemy.prototype.move = function() {
-	this.x += this.dx;
-	this.y += this.dy;
+	this.x += this.dx * 0.6;
+	this.y += this.dy * 0.6;
 	this.timer -= .1;
 	if (this.timer <= 0)
 		this.respawn();
