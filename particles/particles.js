@@ -23,23 +23,19 @@ Particle.prototype.attract = function(x, y) {
 	this.velocityY = (this.y - this.oldY) * DAMPING;
 	this.oldX = this.x;
 	this.oldY = this.y;
-	if (this.x < 0)
-	{
+	if (this.x < 0) {
 		this.x = 0;
 		this.velocityX *= -0.1;
 	}
-	else if (this.x > width)
-	{
+	else if (this.x > width) {
 		this.x = width;
 		this.velocityX *= -0.1;
 	}
-	if (this.y < 0)
-	{
+	if (this.y < 0) {
 		this.y = 0;
 		this.velocityY *= -0.1;
 	}
-	else if (this.y > height)
-	{
+	else if (this.y > height) {
 		this.y = height;
 		this.velocityY *= -0.1;
 	}
@@ -92,10 +88,8 @@ function onMousemove(e) {
 	mouse.y = e.clientY - display.offsetTop;
 }
 
-function keyDownHandler(e)
-{
-	if(e.keyCode == 32 && keyboard_space == false)
-	{
+function keyDownHandler(e) {
+	if(e.keyCode == 32 && keyboard_space == false) {
 		actual_colors++;
 		if (actual_colors > 4)
 			actual_colors = 0;
@@ -103,8 +97,7 @@ function keyDownHandler(e)
 	}
 }
 
-function keyUpHandler(e)
-{
+function keyUpHandler(e) {
 	if(e.keyCode == 32)
 		keyboard_space = false;
 }
