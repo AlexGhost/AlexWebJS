@@ -48,6 +48,11 @@ Particle.prototype.move = function() {
 	}*/
 	this.x += this.velocityX;
 	this.y += this.velocityY;
+	if (this.timer <= 0) {
+		this.timer = 12.;
+		this.x = this.oldX = width / 2 + Math.random() * 50 - 25;
+		this.y = this.oldY = height * 0.99 + Math.random() * 10 - 5;
+	}
 	if (this.timer > 11)
 		this.speed = 11;
 	else if (this.timer > 10)
@@ -73,11 +78,6 @@ Particle.prototype.move = function() {
 	else
 		this.speed = 0;
 	this.timer -= 0.01;
-	if (this.timer <= 0) {
-		this.timer = 12.;
-		this.x = this.oldX = width / 2 + Math.random() * 50 - 25;
-		this.y = this.oldY = height * 0.99 + Math.random() * 10 - 5;
-	}
 };
 
 Particle.prototype.draw = function() {
@@ -88,7 +88,7 @@ Particle.prototype.draw = function() {
 	ctx.moveTo(this.oldX, this.oldY);
 	ctx.lineTo(this.x, this.y);
 	ctx.stroke();*/
-	//CIRCLES
+	//CIRCLE
 	/*ctx.beginPath();
 	ctx.arc(this.x, this.y, 12 - this.speed, 0, Math.PI * 2, false);
 	ctx.fillStyle = convertHex(colors[this.speed], 255 - ((12 - this.speed) * 20));
@@ -96,8 +96,8 @@ Particle.prototype.draw = function() {
 	ctx.closePath();*/
 	//SQUARE
 	ctx.beginPath();
-	ctx.rect(this.x - (12 - this.speed) * 0.5, this.y - (12 - this.speed) * 0.5, 12 - this.speed, 12 - this.speed);
-	ctx.fillStyle = convertHex(colors[this.speed], 255 - ((12 - this.speed) * 20));
+	ctx.rect(this.x - (this.timer + 5) * 0.5, this.y - (this.timer + 5) * 0.5, (this.timer + 5), (this.timer + 5));
+	ctx.fillStyle = convertHex(colors[this.speed], this.timer * 10);
 	ctx.fill();
 	ctx.closePath();
 };
