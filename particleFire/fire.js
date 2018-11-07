@@ -1,6 +1,17 @@
-var DAMPING = 0.995;
+const DAMPING = 0.995;
 var keyboard_space = false;
-var colors = ["#B80006", "#BF1607", "#C62D08", "#CD440A", "#D45A0B", "#DB710D", "#E2880E", "#E99E0F"];
+var colors = ["#270001", "#48040E", "#6D0013", "#930011", "#B80006",
+	"#BF1607", "#C62D08", "#CD440A", "#D45A0B", "#DB710D", "#E2880E", "#E99E0F"];
+
+function convertHex(hex, opacity) {
+	var hex = hex.replace('#', '');
+	var r = parseInt(hex.substring(0,2), 16);
+	var g = parseInt(hex.substring(2,4), 16);
+	var b = parseInt(hex.substring(4,6), 16);
+
+	var result = 'rgba('+r+','+g+','+b+','+opacity/200+')';
+	return result;
+}
 
 function Particle(x, y) {
 	this.x = this.oldX = x;
@@ -13,13 +24,13 @@ Particle.prototype.move = function() {
 	/*var dx = x - this.x;
 	var dy = y - this.y;
 	var distance = Math.sqrt(dx * dx + dy * dy) * 2;*/
-	this.x += Math.random() * 0.04 - 0.02;
-	this.y -= Math.random() * 0.02;
+	this.x += (Math.random() * 0.03 - 0.015) * 1.1;
+	this.y -= Math.random() * 0.012;
 	this.velocityX = (this.x - this.oldX) * DAMPING;
 	this.velocityY = (this.y - this.oldY) * DAMPING;
 	this.oldX = this.x;
 	this.oldY = this.y;
-	if (this.x < 0) {
+	/*if (this.x < 0) {
 		this.x = 0;
 		this.velocityX *= -0.1;
 	}
@@ -31,13 +42,21 @@ Particle.prototype.move = function() {
 		this.y = 0;
 		this.velocityY *= -0.1;
 	}
-	/*else if (this.y > height) {
+	else if (this.y > height) {
 		this.y = height;
 		this.velocityY *= -0.1;
 	}*/
 	this.x += this.velocityX;
 	this.y += this.velocityY;
-	if (this.timer > 7)
+	if (this.timer > 11)
+		this.speed = 11;
+	else if (this.timer > 10)
+		this.speed = 10;
+	else if (this.timer > 9)
+		this.speed = 9;
+	else if (this.timer > 8)
+		this.speed = 8;
+	else if (this.timer > 7)
 		this.speed = 7;
 	else if (this.timer > 6)
 		this.speed = 6;
@@ -55,19 +74,32 @@ Particle.prototype.move = function() {
 		this.speed = 0;
 	this.timer -= 0.01;
 	if (this.timer <= 0) {
-		this.timer = 7.;
+		this.timer = 12.;
 		this.x = this.oldX = width / 2 + Math.random() * 50 - 25;
 		this.y = this.oldY = height * 0.99 + Math.random() * 10 - 5;
 	}
 };
 
 Particle.prototype.draw = function() {
-	ctx.strokeStyle = colors[this.speed];
-	ctx.lineWidth = (this.speed + 6) / 3;
+	//LINE
+	/*ctx.strokeStyle = convertHex(colors[this.speed], 255 - ((12 - this.speed) * 20));
+	ctx.lineWidth = 3;
 	ctx.beginPath();
 	ctx.moveTo(this.oldX, this.oldY);
 	ctx.lineTo(this.x, this.y);
-	ctx.stroke();
+	ctx.stroke();*/
+	//CIRCLES
+	/*ctx.beginPath();
+	ctx.arc(this.x, this.y, 12 - this.speed, 0, Math.PI * 2, false);
+	ctx.fillStyle = convertHex(colors[this.speed], 255 - ((12 - this.speed) * 20));
+	ctx.fill();
+	ctx.closePath();*/
+	//SQUARE
+	ctx.beginPath();
+	ctx.rect(this.x - (12 - this.speed) * 0.5, this.y - (12 - this.speed) * 0.5, 12 - this.speed, 12 - this.speed);
+	ctx.fillStyle = convertHex(colors[this.speed], 255 - ((12 - this.speed) * 20));
+	ctx.fill();
+	ctx.closePath();
 };
 
 var display = document.getElementById('display');
@@ -83,19 +115,29 @@ var mouse = { x: width * 0.5, y: height * 0.5 };
 }*/
 
 requestAnimationFrame(frame);
+ctx.font = "20px Arial";
 function frame() {
 	requestAnimationFrame(frame);
 	ctx.clearRect(0, 0, width, height);
-	if (actual_part < 3000) {
-		particles[actual_part] = new Particle(width / 2 + Math.random() * 50 - 25, height * 0.99 + Math.random() * 10 - 5);
-		particles[actual_part + 1] = new Particle(width / 2 + Math.random() * 50 - 25, height * 0.99 + Math.random() * 10 - 5);
-		particles[actual_part + 2] = new Particle(width / 2 + Math.random() * 50 - 25, height * 0.99 + Math.random() * 10 - 5);
-		actual_part += 3;
-	} else {
-		//actual_part = 0;
+	if (actual_part < 7200) {
+		particles[actual_part] = new Particle(width / 2 + Math.random() * 50 - 25,
+			height * 0.99 + Math.random() * 10 - 5);
+		particles[actual_part + 1] = new Particle(width / 2 + Math.random() * 50 - 25,
+			height * 0.99 + Math.random() * 10 - 5);
+		particles[actual_part + 2] = new Particle(width / 2 + Math.random() * 50 - 25,
+			height * 0.99 + Math.random() * 10 - 5);
+		particles[actual_part + 3] = new Particle(width / 2 + Math.random() * 50 - 25,
+			height * 0.99 + Math.random() * 10 - 5);
+		particles[actual_part + 4] = new Particle(width / 2 + Math.random() * 50 - 25,
+			height * 0.99 + Math.random() * 10 - 5);
+		particles[actual_part + 5] = new Particle(width / 2 + Math.random() * 50 - 25,
+			height * 0.99 + Math.random() * 10 - 5);
+		actual_part += 6;
 	}
 	for (var i = 0; i < particles.length; i++) {
 		particles[i].move();
 		particles[i].draw();
 	}
+	ctx.fillStyle = "#111111";
+	ctx.fillText("Particles: "+particles.length, 0, height);
 }
