@@ -96,7 +96,7 @@ Particle.prototype.draw = function() {
 	//SQUARE
 	ctx.beginPath();
 	ctx.rect(this.x - 5, this.y - 5, 10, 10);
-	ctx.fillStyle = convertHex("#FFFFFF", 100);
+	ctx.fillStyle = convertHex("#FFFFFF", 50);
 	ctx.fill();
 	ctx.closePath();
 };
@@ -118,14 +118,9 @@ ctx.font = "20px Arial";
 function frame() {
 	requestAnimationFrame(frame);
 	ctx.clearRect(0, 0, width, height);
-	if (actual_part < 7200) {
+	if (actual_part < 2000) {
 		particles[actual_part] = new Particle(0, 0);
-		particles[actual_part + 1] = new Particle(0, 0);
-		particles[actual_part + 2] = new Particle(0, 0);
-		particles[actual_part + 3] = new Particle(0, 0);
-		particles[actual_part + 4] = new Particle(0, 0);
-		particles[actual_part + 5] = new Particle(0, 0);
-		actual_part += 6;
+		actual_part += 1;
 	}
 	for (var i = 0; i < particles.length; i++) {
 		particles[i].move();
