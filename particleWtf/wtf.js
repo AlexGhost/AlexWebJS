@@ -1,4 +1,4 @@
-const DAMPING = 0.995;
+const DAMPING = 0.99;
 var colors = ["#270001", "#48040E", "#6D0013", "#930011", "#B80006",
 	"#BF1607", "#C62D08", "#CD440A", "#D45A0B", "#DB710D", "#E2880E", "#E99E0F"];
 
@@ -23,8 +23,8 @@ Particle.prototype.move = function() {
 	/*var dx = x - this.x;
 	var dy = y - this.y;
 	var distance = Math.sqrt(dx * dx + dy * dy) * 2;*/
-	this.x += (Math.random() * 0.03 - 0.015) * 1.1;
-	this.y -= Math.random() * 0.012;
+	this.x += Math.cos(this.timer * Math.PI * 1.1) * (Math.random() * 0.3);
+	this.y += Math.sin(this.timer * Math.PI * 1.1) * (Math.random() * 0.3);
 	this.velocityX = (this.x - this.oldX) * DAMPING;
 	this.velocityY = (this.y - this.oldY) * DAMPING;
 	this.oldX = this.x;
@@ -49,8 +49,8 @@ Particle.prototype.move = function() {
 	this.y += this.velocityY;
 	if (this.timer <= 0) {
 		this.timer = 12.;
-		this.x = this.oldX = width / 2 + Math.random() * 50 - 25;
-		this.y = this.oldY = height * 0.99 + Math.random() * 10 - 5;
+		this.x = this.oldX = width / 2 + 300;
+		this.y = this.oldY = height/ 2 - 400;
 	}
 	if (this.timer > 11)
 		this.speed = 11;
@@ -95,8 +95,8 @@ Particle.prototype.draw = function() {
 	ctx.closePath();*/
 	//SQUARE
 	ctx.beginPath();
-	ctx.rect(this.x - (this.timer + 5) * 0.5, this.y - (this.timer + 5) * 0.5, (this.timer + 5), (this.timer + 5));
-	ctx.fillStyle = convertHex(colors[this.speed], this.timer * 10);
+	ctx.rect(this.x - 5, this.y - 5, 10, 10);
+	ctx.fillStyle = convertHex("#FFFFFF", 100);
 	ctx.fill();
 	ctx.closePath();
 };
@@ -119,24 +119,18 @@ function frame() {
 	requestAnimationFrame(frame);
 	ctx.clearRect(0, 0, width, height);
 	if (actual_part < 7200) {
-		particles[actual_part] = new Particle(width / 2 + Math.random() * 50 - 25,
-			height * 0.99 + Math.random() * 10 - 5);
-		particles[actual_part + 1] = new Particle(width / 2 + Math.random() * 50 - 25,
-			height * 0.99 + Math.random() * 10 - 5);
-		particles[actual_part + 2] = new Particle(width / 2 + Math.random() * 50 - 25,
-			height * 0.99 + Math.random() * 10 - 5);
-		particles[actual_part + 3] = new Particle(width / 2 + Math.random() * 50 - 25,
-			height * 0.99 + Math.random() * 10 - 5);
-		particles[actual_part + 4] = new Particle(width / 2 + Math.random() * 50 - 25,
-			height * 0.99 + Math.random() * 10 - 5);
-		particles[actual_part + 5] = new Particle(width / 2 + Math.random() * 50 - 25,
-			height * 0.99 + Math.random() * 10 - 5);
+		particles[actual_part] = new Particle(0, 0);
+		particles[actual_part + 1] = new Particle(0, 0);
+		particles[actual_part + 2] = new Particle(0, 0);
+		particles[actual_part + 3] = new Particle(0, 0);
+		particles[actual_part + 4] = new Particle(0, 0);
+		particles[actual_part + 5] = new Particle(0, 0);
 		actual_part += 6;
 	}
 	for (var i = 0; i < particles.length; i++) {
 		particles[i].move();
 		particles[i].draw();
 	}
-	ctx.fillStyle = "#111111";
-	ctx.fillText("Particles: "+particles.length, 0, height);
+	/*ctx.fillStyle = "#111111";
+	ctx.fillText("Particles: "+particles.length, 0, height);*/
 }
