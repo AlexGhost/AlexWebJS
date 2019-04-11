@@ -13,7 +13,8 @@ var scene,
 	container;
 
 //SCENE
-var floor, cube;
+var floor,
+	redCube, blueCube, greenCube;
 
 //SCREEN VARIABLES
 
@@ -74,30 +75,31 @@ function handleMouseMove(event) {
 }
 
 function handleMouseDown(event) {
-	//isBlowing = true;
+	//redCube.threegroup.scale.x *= 1.1;
+	//redCube.threegroup.scale.y *= 1.1;
+	//redCube.threegroup.scale.z *= 1.1;
 }
 function handleMouseUp(event) {
-	//isBlowing = false;
 }
 
 function handleTouchStart(event) {
 	if (event.touches.length > 1) {
 		event.preventDefault();
 		mousePos = {x:event.touches[0].pageX, y:event.touches[0].pageY};
-		//isBlowing = true;
+		//redCube.threegroup.scale.x *= 1.1;
+		//redCube.threegroup.scale.y *= 1.1;
+		//redCube.threegroup.scale.z *= 1.1;
 	}
 }
 
 function handleTouchEnd(event) {
 	mousePos = {x:windowHalfX, y:windowHalfY};
-	//isBlowing = false;
 }
 
 function handleTouchMove(event) {
 	if (event.touches.length == 1) {
 		event.preventDefault();
 		mousePos = {x:event.touches[0].pageX, y:event.touches[0].pageY};
-		//isBlowing = true;
 	}
 }
 
@@ -114,52 +116,139 @@ function createLights() {
 
 function createFloor(){
 	floor = new THREE.Mesh(
-		new THREE.PlaneBufferGeometry(1000,500),
+		new THREE.PlaneBufferGeometry(1000,1000),
 		new THREE.MeshBasicMaterial({color: 0xebe5e7})
 	);
 	floor.rotation.x = -Math.PI/2;
-	floor.position.y = -100;
+	floor.position.x = -300;
+	floor.position.y = -300;
+	floor.position.z = -400;
 	floor.receiveShadow = true;
 	scene.add(floor);
 }
 
 function createCube() {
-	cube = new Cube();
-	scene.add(cube.threegroup);
+	redCube = new Cube(0xad3525, -200, 0);
+	greenCube = new Cube(0x4a994e, 0, 0);
+	blueCube = new Cube(0x346ba3, 200, 0);
+	scene.add(redCube.threegroup);
+	scene.add(greenCube.threegroup);
+	scene.add(blueCube.threegroup);
 }
 
-Cube = function() {
+Cube = function(color, posX, posY) {
 	this.threegroup = new THREE.Group();
-	this.mat = new THREE.MeshLambertMaterial({
-		color: 0xad3525,
+
+	this.posX = posX;
+	this.posY = posY;
+
+	this.bodyMat = new THREE.MeshLambertMaterial({
+		color: color,
+		shading:THREE.FlatShading
+	});
+	this.eyeBallMat = new THREE.MeshBasicMaterial({
+		color: 0xffffff
+	});
+	this.eyeMat = new THREE.MeshBasicMaterial({
+		color: 0x000000
+	});
+	this.mouthMat = new THREE.MeshLambertMaterial({
+		color: 0x555555,
 		shading:THREE.FlatShading
 	});
 
 	var bodyGeom = new THREE.BoxGeometry(80, 80, 80);
-	this.body = new THREE.Mesh(bodyGeom, this.mat);
+	this.body = new THREE.Mesh(bodyGeom, this.bodyMat);
+	var eyeBallGeom = new THREE.BoxGeometry(20, 20, 10);
+	this.eyeBall1 = new THREE.Mesh(eyeBallGeom, this.eyeBallMat);
+	this.eyeBall1.position.x = -15;
+	this.eyeBall1.position.y = 15;
+	this.eyeBall1.position.z = 40;
+	this.eyeBall2 = new THREE.Mesh(eyeBallGeom, this.eyeBallMat);
+	this.eyeBall2.position.x = 15;
+	this.eyeBall2.position.y = 15;
+	this.eyeBall2.position.z = 40;
+	var eyeGeom = new THREE.BoxGeometry(5, 5, 5);
+	this.eye1 = new THREE.Mesh(eyeGeom, this.eyeMat);
+	this.eye1.position.x = -15;
+	this.eye1.position.y = 15;
+	this.eye1.position.z = 44;
+	this.eye2 = new THREE.Mesh(eyeGeom, this.eyeMat);
+	this.eye2.position.x = 15;
+	this.eye2.position.y = 15;
+	this.eye2.position.z = 44;
+	var mouthGeom = new THREE.BoxGeometry(20, 10, 10);
+	this.mouth = new THREE.Mesh(mouthGeom, this.mouthMat);
+	this.mouth.position.y = -20;
+	this.mouth.position.z = 40;
 
 	this.threegroup.add(this.body);
+	this.threegroup.add(this.eyeBall1);
+	this.threegroup.add(this.eye1);
+	this.threegroup.add(this.eyeBall2);
+	this.threegroup.add(this.eye2);
+	this.threegroup.add(this.mouth);
 	this.threegroup.traverse(function(object) {
 		if (object instanceof THREE.Mesh) {
 			object.castShadow = true;
 			object.receiveShadow = true;
 		}
 	});
+	this.threegroup.position.x = posX;
+	this.threegroup.position.y = posY;
 }
 
-Cube.prototype.loop = function() {
-	this.body.rotation.y += .01;
-	this.body.rotation.x += .02;
+Cube.prototype.look = function(xTarget, yTarget) {
+	var tHeagRotY = rule3(xTarget, -200, 200, -Math.PI / 4, Math.PI / 4);
+	var tHeadRotX = rule3(yTarget, -200,200, -Math.PI / 4, Math.PI / 4);
+	var tHeadPosX = (rule3(xTarget, -200, 200, 70, -70) * 0.5) + this.posX;
+	var tHeadPosY = (rule3(yTarget, -140, 260, 20, 100) * 0.5) + this.posY;
+	var tEye1PosX = rule3(xTarget, -200, 200, -45, -15) * 0.5;
+	var tEye1PosY = rule3(yTarget, -200, 200, 45, 15) * 0.5;
+	var tEye2PosX = rule3(xTarget, -200, 200, 15, 45) * 0.5;
+	var tEye2PosY = rule3(yTarget, -200, 200, 45, 15) * 0.5;
+	this.threegroup.rotation.y += (tHeagRotY - this.threegroup.rotation.y) / 10;
+	this.threegroup.rotation.x += (tHeadRotX - this.threegroup.rotation.x) / 10;
+	this.threegroup.position.x += (tHeadPosX - this.threegroup.position.x) / 20;
+	this.threegroup.position.y += (tHeadPosY - this.threegroup.position.y) / 20;
+	this.eye1.position.x += (tEye1PosX - this.eye1.position.x) / 10;
+	this.eye1.position.y += (tEye1PosY - this.eye1.position.y) / 10;
+	this.eye2.position.x += (tEye2PosX - this.eye2.position.x) / 10;
+	this.eye2.position.y += (tEye2PosY - this.eye2.position.y) / 10;
 }
 
-function loop() {
+Cube.prototype.thinkLook = function() {
+	this.watchX = (Math.random(0, 1) - 0.5) * 1000;
+	this.watchY = (Math.random(0, 1) - 0.5) * 1000;
+}
+
+function loop(xTarget, yTarget) {
+	var xTarget = (mousePos.x - windowHalfX);
+	var yTarget= (mousePos.y - windowHalfY);
+	redCube.thinkLook();
+	blueCube.thinkLook();
+	redCube.look(redCube.watchX, redCube.watchY);
+	greenCube.look(xTarget, yTarget);
+	blueCube.look(blueCube.watchX, blueCube.watchY);
 	render();
-	cube.loop();
 	requestAnimationFrame(loop);
 }
 
 function render() {
 	renderer.render(scene, camera);
+}
+
+function clamp(v, min, max){
+	return Math.min(Math.max(v, min), max);
+}
+
+function rule3(v, vmin, vmax, tmin, tmax){
+	var nv = Math.max(Math.min(v,vmax), vmin);
+	var dv = vmax-vmin;
+	var pc = (nv-vmin)/dv;
+	var dt = tmax-tmin;
+	var tv = tmin + (pc*dt);
+	return tv;
 }
 
 init();
