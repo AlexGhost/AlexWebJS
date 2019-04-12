@@ -1,5 +1,4 @@
 //THREEJS RELATED VARIABLES
-
 var scene,
 	camera,
 	controls,
@@ -14,10 +13,11 @@ var scene,
 
 //SCENE
 var floor,
-	redCube, blueCube, greenCube;
+	redCube, blueCube, greenCube,
+	orangeCube, pinkCube,
+	purpleCube, blackCube, goldCube, brownCube;
 
 //SCREEN VARIABLES
-
 var HEIGHT,
 	WIDTH,
 	windowHalfX,
@@ -25,8 +25,7 @@ var HEIGHT,
 	mousePos = {x:0,y:0};
 	dist = 0;
 
-	//INIT THREE JS, SCREEN AND MOUSE EVENTS
-
+//INIT THREE JS, SCREEN AND MOUSE EVENTS
 function init(){
 	scene = new THREE.Scene();
 	HEIGHT = window.innerHeight;
@@ -70,6 +69,7 @@ function onWindowResize() {
 	camera.updateProjectionMatrix();
 }
 
+//EVENTS
 function handleMouseMove(event) {
 	mousePos = {x:event.clientX, y:event.clientY};
 }
@@ -103,6 +103,7 @@ function handleTouchMove(event) {
 	}
 }
 
+//OBJECTS CREATION
 function createLights() {
 	light = new THREE.HemisphereLight(0xffffff, 0xffffff, .5);
 	shadowLight = new THREE.DirectionalLight(0xffffff, .8);
@@ -127,20 +128,37 @@ function createFloor(){
 	scene.add(floor);
 }
 
-function createCube() {
-	redCube = new Cube(0xad3525, -200, 0);
-	greenCube = new Cube(0x4a994e, 0, 0);
-	blueCube = new Cube(0x346ba3, 200, 0);
+function createCubes() {
+	redCube = new Cube(0xad3525, -200, 0, 0.5);
+	greenCube = new Cube(0x4a994e, 0, 0, 0);
+	blueCube = new Cube(0x346ba3, 200, 0, 1);
+	orangeCube = new Cube(0xc1590f, 0, 200, 1.5);
+	pinkCube = new Cube(0xc451c6, 0, -200, 1.25);
+	purpleCube = new Cube(0x5e44dd, -200, 200, 1.75);
+	blackCube = new Cube(0x232323, 200, 200, 2);
+	goldCube = new Cube(0xf9e316, -200, -200, 0.1);
+	brownCube = new Cube(0x774627, 200, -200, 2.25);
 	scene.add(redCube.threegroup);
 	scene.add(greenCube.threegroup);
 	scene.add(blueCube.threegroup);
+	scene.add(orangeCube.threegroup);
+	scene.add(pinkCube.threegroup);
+	scene.add(purpleCube.threegroup);
+	scene.add(blackCube.threegroup);
+	scene.add(goldCube.threegroup);
+	scene.add(brownCube.threegroup);
 }
 
-Cube = function(color, posX, posY) {
+Cube = function(color, posX, posY, reactionTime) {
 	this.threegroup = new THREE.Group();
 
 	this.posX = posX;
 	this.posY = posY;
+	this.reactionTime = reactionTime;
+
+	this.timer = 0;
+	this.watchX = 0;
+	this.watchY = 0;
 
 	this.bodyMat = new THREE.MeshLambertMaterial({
 		color: color,
@@ -215,21 +233,33 @@ Cube.prototype.look = function(xTarget, yTarget) {
 	this.eye1.position.y += (tEye1PosY - this.eye1.position.y) / 10;
 	this.eye2.position.x += (tEye2PosX - this.eye2.position.x) / 10;
 	this.eye2.position.y += (tEye2PosY - this.eye2.position.y) / 10;
+
+	if (this.timer > 0) {
+		this.timer -= 0.01;
+	} else {
+		this.timer = this.reactionTime
+		this.thinkLook();
+	}
 }
 
 Cube.prototype.thinkLook = function() {
-	this.watchX = (Math.random(0, 1) - 0.5) * 1000;
-	this.watchY = (Math.random(0, 1) - 0.5) * 1000;
+	this.watchX = (Math.random(0, 1) - 0.5) * 200;
+	this.watchY = (Math.random(0, 1) - 0.5) * 200;
 }
 
+//LOGIC FUNCTIONS
 function loop(xTarget, yTarget) {
 	var xTarget = (mousePos.x - windowHalfX);
 	var yTarget= (mousePos.y - windowHalfY);
-	redCube.thinkLook();
-	blueCube.thinkLook();
 	redCube.look(redCube.watchX, redCube.watchY);
 	greenCube.look(xTarget, yTarget);
 	blueCube.look(blueCube.watchX, blueCube.watchY);
+	orangeCube.look(orangeCube.watchX, orangeCube.watchY);
+	pinkCube.look(pinkCube.watchX, pinkCube.watchY);
+	purpleCube.look(purpleCube.watchX, purpleCube.watchY);
+	blackCube.look(blackCube.watchX, blackCube.watchY);
+	goldCube.look(goldCube.watchX, goldCube.watchY);
+	brownCube.look(brownCube.watchX, brownCube.watchY);
 	render();
 	requestAnimationFrame(loop);
 }
@@ -238,6 +268,7 @@ function render() {
 	renderer.render(scene, camera);
 }
 
+//UTILS
 function clamp(v, min, max){
 	return Math.min(Math.max(v, min), max);
 }
@@ -251,8 +282,9 @@ function rule3(v, vmin, vmax, tmin, tmax){
 	return tv;
 }
 
+//MAIN
 init();
 createFloor();
 createLights();
-createCube();
+createCubes();
 loop();
