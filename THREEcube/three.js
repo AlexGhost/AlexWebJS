@@ -52,8 +52,8 @@ function init(){
 	windowHalfY = HEIGHT / 2;
 	window.addEventListener('resize', onWindowResize, false);
 	document.addEventListener('mousemove', handleMouseMove, false);
-	document.addEventListener('mousedown', handleMouseDown, false);
-	document.addEventListener('mouseup', handleMouseUp, false);
+	/*document.addEventListener('mousedown', handleMouseDown, false);
+	document.addEventListener('mouseup', handleMouseUp, false);*/
 	document.addEventListener('touchstart', handleTouchStart, false);
 	document.addEventListener('touchend', handleTouchEnd, false);
 	document.addEventListener('touchmove',handleTouchMove, false);
@@ -74,21 +74,16 @@ function handleMouseMove(event) {
 	mousePos = {x:event.clientX, y:event.clientY};
 }
 
-function handleMouseDown(event) {
-	//redCube.threegroup.scale.x *= 1.1;
-	//redCube.threegroup.scale.y *= 1.1;
-	//redCube.threegroup.scale.z *= 1.1;
+/*function handleMouseDown(event) {
 }
+
 function handleMouseUp(event) {
-}
+}*/
 
 function handleTouchStart(event) {
 	if (event.touches.length > 1) {
 		event.preventDefault();
 		mousePos = {x:event.touches[0].pageX, y:event.touches[0].pageY};
-		//redCube.threegroup.scale.x *= 1.1;
-		//redCube.threegroup.scale.y *= 1.1;
-		//redCube.threegroup.scale.z *= 1.1;
 	}
 }
 
