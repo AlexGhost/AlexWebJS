@@ -124,15 +124,15 @@ function createFloor(){
 }
 
 function createCubes() {
-	redCube = new Cube(0xad3525, -200, 0, 0.5);
-	greenCube = new Cube(0x4a994e, 0, 0, 0);
-	blueCube = new Cube(0x346ba3, 200, 0, 1);
-	orangeCube = new Cube(0xc1590f, 0, 200, 1.5);
-	pinkCube = new Cube(0xc451c6, 0, -200, 1.25);
-	purpleCube = new Cube(0x5e44dd, -200, 200, 1.75);
-	blackCube = new Cube(0x232323, 200, 200, 2);
-	goldCube = new Cube(0xf9e316, -200, -200, 0.1);
-	brownCube = new Cube(0x774627, 200, -200, 2.25);
+	redCube = new Cube(0xad3525, -200, 0, Math.random() * (2 - 0.5) + 0.5);
+	greenCube = new Cube(0x4a994e, 0, 0, Math.random() * (2 - 0.5) + 0.5);
+	blueCube = new Cube(0x346ba3, 200, 0, Math.random() * (2 - 0.5) + 0.5);
+	orangeCube = new Cube(0xc1590f, 0, 200, Math.random() * (2 - 0.5) + 0.5);
+	pinkCube = new Cube(0xc451c6, 0, -200, Math.random() * (2 - 0.5) + 0.5);
+	purpleCube = new Cube(0x5e44dd, -200, 200, Math.random() * (2 - 0.5) + 0.5);
+	blackCube = new Cube(0x232323, 200, 200, Math.random() * (2 - 0.5) + 0.5);
+	goldCube = new Cube(0xf9e316, -200, -200, Math.random() * (2 - 0.5) + 0.5);
+	brownCube = new Cube(0x774627, 200, -200, Math.random() * (2 - 0.5) + 0.5);
 	scene.add(redCube.threegroup);
 	scene.add(greenCube.threegroup);
 	scene.add(blueCube.threegroup);
