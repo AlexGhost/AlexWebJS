@@ -112,11 +112,12 @@ function createLights() {
 
 function createFloor(){
 	floor = new THREE.Mesh(
-		new THREE.PlaneBufferGeometry(1000,1000),
+		new THREE.PlaneBufferGeometry(1200,1000),
 		new THREE.MeshBasicMaterial({color: 0xebe5e7})
+		//new THREE.MeshBasicMaterial({color: 0xff0000})
 	);
 	floor.rotation.x = -Math.PI/2;
-	floor.position.x = -300;
+	floor.position.x = -350;
 	floor.position.y = -300;
 	floor.position.z = -400;
 	floor.receiveShadow = true;
@@ -176,6 +177,7 @@ Cube = function(color, posX, posY, reactionTime) {
 
 	var bodyGeom = new THREE.BoxGeometry(80, 80, 80);
 	this.body = new THREE.Mesh(bodyGeom, this.bodyMat);
+
 	var eyeBallGeom = new THREE.BoxGeometry(20, 20, 10);
 	this.eyeBall1 = new THREE.Mesh(eyeBallGeom, this.eyeBallMat);
 	this.eyeBall1.position.x = -15;
@@ -185,6 +187,7 @@ Cube = function(color, posX, posY, reactionTime) {
 	this.eyeBall2.position.x = 15;
 	this.eyeBall2.position.y = 15;
 	this.eyeBall2.position.z = 40;
+
 	var eyeGeom = new THREE.BoxGeometry(5, 5, 5);
 	this.eye1 = new THREE.Mesh(eyeGeom, this.eyeMat);
 	this.eye1.position.x = -15;
@@ -194,6 +197,7 @@ Cube = function(color, posX, posY, reactionTime) {
 	this.eye2.position.x = 15;
 	this.eye2.position.y = 15;
 	this.eye2.position.z = 44;
+
 	var mouthGeom = new THREE.BoxGeometry(20, 10, 10);
 	this.mouth = new THREE.Mesh(mouthGeom, this.mouthMat);
 	this.mouth.position.y = -20;
