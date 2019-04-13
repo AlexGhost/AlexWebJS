@@ -246,15 +246,59 @@ Cube.prototype.thinkLook = function() {
 function loop(xTarget, yTarget) {
 	var xTarget = (mousePos.x - windowHalfX);
 	var yTarget= (mousePos.y - windowHalfY);
-	redCube.look(redCube.watchX, redCube.watchY);
+
 	greenCube.look(xTarget, yTarget);
-	blueCube.look(blueCube.watchX, blueCube.watchY);
-	orangeCube.look(orangeCube.watchX, orangeCube.watchY);
-	pinkCube.look(pinkCube.watchX, pinkCube.watchY);
-	purpleCube.look(purpleCube.watchX, purpleCube.watchY);
-	blackCube.look(blackCube.watchX, blackCube.watchY);
-	goldCube.look(goldCube.watchX, goldCube.watchY);
-	brownCube.look(brownCube.watchX, brownCube.watchY);
+
+	//LOOK AT GREEN IF GREEN LOOK AT THEM
+	if (yTarget < -150 && xTarget < 100 && xTarget > -100) {
+		orangeCube.look(0, 200);
+		console.log('up');
+	} else {
+		orangeCube.look(orangeCube.watchX, orangeCube.watchY);
+	}
+	if (yTarget > 150 && xTarget < 100 && xTarget > -100) {
+		pinkCube.look(0, -200);
+		console.log('down');
+	} else {
+		pinkCube.look(pinkCube.watchX, pinkCube.watchY);
+	}
+	if (xTarget < -150 && yTarget < 100 && yTarget > -100) {
+		redCube.look(200, 0);
+		console.log('left');
+	} else {
+		redCube.look(redCube.watchX, redCube.watchY);
+	}
+	if (xTarget > 150 && yTarget < 100 && yTarget > -100) {
+		blueCube.look(-200, 0);
+		console.log('right');
+	} else {
+		blueCube.look(blueCube.watchX, blueCube.watchY);
+	}
+	if (xTarget > 200 && yTarget < -100) {
+		blackCube.look(-200, 200);
+		console.log('upright');
+	} else {
+		blackCube.look(blackCube.watchX, blackCube.watchY);
+	}
+	if (xTarget < -200 && yTarget < -100) {
+		purpleCube.look(200, 200);
+		console.log('upleft');
+	} else {
+		purpleCube.look(purpleCube.watchX, purpleCube.watchY);
+	}
+	if (xTarget > 200 && yTarget > 100) {
+		brownCube.look(-200, -200);
+		console.log('downright');
+	} else {
+		brownCube.look(brownCube.watchX, brownCube.watchY);
+	}
+	if (xTarget < -200 && yTarget > 100) {
+		goldCube.look(200, -200);
+		console.log('downleft');
+	} else {
+		goldCube.look(goldCube.watchX, goldCube.watchY);
+	}
+
 	render();
 	requestAnimationFrame(loop);
 }
