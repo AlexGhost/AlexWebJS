@@ -150,10 +150,14 @@ Cube = function(color, posX, posY, reactionTime) {
 	this.posX = posX;
 	this.posY = posY;
 	this.reactionTime = reactionTime;
+	this.twitchTime = reactionTime * 0.33;
 
 	this.timer = 0;
+	this.timerTwitch = 0;
 	this.watchX = 0;
 	this.watchY = 0;
+	this.eyeTwitchX = 0;
+	this.eyeTwitchY = 0;
 
 	this.bodyMat = new THREE.MeshLambertMaterial({
 		color: color,
@@ -216,10 +220,10 @@ Cube.prototype.look = function(xTarget, yTarget) {
 	var tHeadRotX = rule3(yTarget, -200,200, -Math.PI / 4, Math.PI / 4);
 	var tHeadPosX = (rule3(xTarget, -200, 200, 70, -70) * 0.5) + this.posX;
 	var tHeadPosY = (rule3(yTarget, -140, 260, 20, 100) * 0.5) + this.posY;
-	var tEye1PosX = rule3(xTarget, -200, 200, -45, -15) * 0.5;
-	var tEye1PosY = rule3(yTarget, -200, 200, 45, 15) * 0.5;
-	var tEye2PosX = rule3(xTarget, -200, 200, 15, 45) * 0.5;
-	var tEye2PosY = rule3(yTarget, -200, 200, 45, 15) * 0.5;
+	var tEye1PosX = (rule3(xTarget, -200, 200, -45, -15) * 0.5) + this.eyeTwitchX;
+	var tEye1PosY = (rule3(yTarget, -200, 200, 45, 15) * 0.5) + this.eyeTwitchY;
+	var tEye2PosX = (rule3(xTarget, -200, 200, 15, 45) * 0.5) + this.eyeTwitchX;
+	var tEye2PosY = (rule3(yTarget, -200, 200, 45, 15) * 0.5) + this.eyeTwitchY;
 	this.threegroup.rotation.y += (tHeagRotY - this.threegroup.rotation.y) / 10;
 	this.threegroup.rotation.x += (tHeadRotX - this.threegroup.rotation.x) / 10;
 	this.threegroup.position.x += (tHeadPosX - this.threegroup.position.x) / 20;
@@ -235,11 +239,18 @@ Cube.prototype.look = function(xTarget, yTarget) {
 		this.timer = this.reactionTime
 		this.thinkLook();
 	}
+	if (this.timerTwitch > 0) {
+		this.timerTwitch -= 0.01;
+	} else {
+		this.timerTwitch = this.twitchTime
+		this.eyeTwitchX = Math.random() * (2 + 2) - 2;
+		this.eyeTwitchY = Math.random() * (2 + 2) - 2;
+	}
 }
 
 Cube.prototype.thinkLook = function() {
-	this.watchX = (Math.random(0, 1) - 0.5) * 200;
-	this.watchY = (Math.random(0, 1) - 0.5) * 200;
+	this.watchX = Math.random() * (100 + 100) - 100;
+	this.watchY = Math.random() * (100 + 100) - 100;
 }
 
 //LOGIC FUNCTIONS
