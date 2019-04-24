@@ -26,7 +26,7 @@ var HEIGHT,
 	dist = 0;
 
 //INIT THREE JS, SCREEN AND MOUSE EVENTS
-function init(){
+function init() {
 	scene = new THREE.Scene();
 	HEIGHT = window.innerHeight;
 	WIDTH = window.innerWidth;
@@ -319,11 +319,11 @@ function loop(xTarget, yTarget) {
 }
 
 //UTILS
-function clamp(v, min, max){
+function clamp(v, min, max) {
 	return Math.min(Math.max(v, min), max);
 }
 
-function rule3(v, vmin, vmax, tmin, tmax){
+function rule3(v, vmin, vmax, tmin, tmax) {
 	var nv = Math.max(Math.min(v,vmax), vmin);
 	var dv = vmax-vmin;
 	var pc = (nv-vmin)/dv;
