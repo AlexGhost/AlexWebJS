@@ -314,12 +314,8 @@ function loop(xTarget, yTarget) {
 		goldCube.look(goldCube.watchX, goldCube.watchY);
 	}
 
-	render();
-	requestAnimationFrame(loop);
-}
-
-function render() {
 	renderer.render(scene, camera);
+	requestAnimationFrame(loop);
 }
 
 //UTILS
