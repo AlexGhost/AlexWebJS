@@ -16,6 +16,16 @@ var floor;
 
 var cubes = [9];
 
+var GREEN = 0,
+	RED = 1,
+	BLUE = 2,
+	PINK = 3,
+	ORANGE = 4,
+	GOLD = 5,
+	BROWN = 6,
+	PURPLE = 7,
+	BLACK = 8;
+
 //SCREEN VARIABLES
 var HEIGHT,
 	WIDTH,
@@ -84,15 +94,15 @@ function createFloor(){
 }
 
 function createCubes() {
-	cubes[0] = new Cube(0x4a994e, 0, 0, Math.random() * (2 - 0.5) + 0.5);
-	cubes[1] = new Cube(0xad3525, -200, 0, Math.random() * (2 - 0.5) + 0.5);
-	cubes[2] = new Cube(0x346ba3, 200, 0, Math.random() * (2 - 0.5) + 0.5);
-	cubes[3] = new Cube(0xc1590f, 0, 200, Math.random() * (2 - 0.5) + 0.5);
-	cubes[4] = new Cube(0xc451c6, 0, -200, Math.random() * (2 - 0.5) + 0.5);
-	cubes[5] = new Cube(0x5e44dd, -200, 200, Math.random() * (2 - 0.5) + 0.5);
-	cubes[6] = new Cube(0x232323, 200, 200, Math.random() * (2 - 0.5) + 0.5);
-	cubes[7] = new Cube(0xf9e316, -200, -200, Math.random() * (2 - 0.5) + 0.5);
-	cubes[8] = new Cube(0x774627, 200, -200, Math.random() * (2 - 0.5) + 0.5);
+	cubes[GREEN] = new Cube(0x4a994e, 0, 0, Math.random() * (2 - 0.5) + 0.5);
+	cubes[RED] = new Cube(0xad3525, -200, 0, Math.random() * (2 - 0.5) + 0.5);
+	cubes[BLUE] = new Cube(0x346ba3, 200, 0, Math.random() * (2 - 0.5) + 0.5);
+	cubes[PINK] = new Cube(0xc1590f, 0, 200, Math.random() * (2 - 0.5) + 0.5);
+	cubes[ORANGE] = new Cube(0xc451c6, 0, -200, Math.random() * (2 - 0.5) + 0.5);
+	cubes[GOLD] = new Cube(0x5e44dd, -200, 200, Math.random() * (2 - 0.5) + 0.5);
+	cubes[BROWN] = new Cube(0x232323, 200, 200, Math.random() * (2 - 0.5) + 0.5);
+	cubes[PURPLE] = new Cube(0xf9e316, -200, -200, Math.random() * (2 - 0.5) + 0.5);
+	cubes[BLACK] = new Cube(0x774627, 200, -200, Math.random() * (2 - 0.5) + 0.5);
 
 	var i = 0;
 	while (i < cubes.length) {
@@ -106,48 +116,48 @@ function loop(xTarget, yTarget) {
 	var xTarget = (mousePos.x - windowHalfX);
 	var yTarget= (mousePos.y - windowHalfY);
 
-	cubes[0].look(xTarget, yTarget);
+	cubes[GREEN].look(xTarget, yTarget);
 
 	//LOOK AT GREEN IF GREEN LOOK AT THEM
 	if (xTarget < -150 && yTarget < 100 && yTarget > -100) {
-		cubes[1].look(200, 1);
+		cubes[RED].look(200, 1);
 	} else {
-		cubes[1].look(cubes[1].watchX, cubes[1].watchY);
+		cubes[RED].look(cubes[RED].watchX, cubes[RED].watchY);
 	}
 	if (xTarget > 150 && yTarget < 100 && yTarget > -100) {
-		cubes[2].look(-200, 0);
+		cubes[BLUE].look(-200, 0);
 	} else {
-		cubes[2].look(cubes[2].watchX, cubes[2].watchY);
+		cubes[BLUE].look(cubes[BLUE].watchX, cubes[BLUE].watchY);
 	}
 	if (yTarget < -150 && xTarget < 100 && xTarget > -100) {
-		cubes[3].look(0, 200);
+		cubes[PINK].look(0, 200);
 	} else {
-		cubes[3].look(cubes[3].watchX, cubes[3].watchY);
+		cubes[PINK].look(cubes[PINK].watchX, cubes[PINK].watchY);
 	}
 	if (yTarget > 150 && xTarget < 100 && xTarget > -100) {
-		cubes[4].look(0, -200);
+		cubes[ORANGE].look(0, -200);
 	} else {
-		cubes[4].look(cubes[4].watchX, cubes[4].watchY);
+		cubes[ORANGE].look(cubes[ORANGE].watchX, cubes[ORANGE].watchY);
 	}
 	if (xTarget < -200 && yTarget < -100) {
-		cubes[5].look(200, 200);
+		cubes[GOLD].look(200, 200);
 	} else {
-		cubes[5].look(cubes[5].watchX, cubes[5].watchY);
+		cubes[GOLD].look(cubes[GOLD].watchX, cubes[GOLD].watchY);
 	}
 	if (xTarget > 200 && yTarget < -100) {
-		cubes[6].look(-200, 200);
+		cubes[BROWN].look(-200, 200);
 	} else {
-		cubes[6].look(cubes[6].watchX, cubes[6].watchY);
+		cubes[BROWN].look(cubes[BROWN].watchX, cubes[BROWN].watchY);
 	}
 	if (xTarget < -200 && yTarget > 100) {
-		cubes[7].look(200, -200);
+		cubes[PURPLE].look(200, -200);
 	} else {
-		cubes[7].look(cubes[7].watchX, cubes[7].watchY);
+		cubes[PURPLE].look(cubes[PURPLE].watchX, cubes[PURPLE].watchY);
 	}
 	if (xTarget > 200 && yTarget > 100) {
-		cubes[8].look(-200, -200);
+		cubes[BLACK].look(-200, -200);
 	} else {
-		cubes[8].look(cubes[8].watchX, cubes[8].watchY);
+		cubes[BLACK].look(cubes[BLACK].watchX, cubes[BLACK].watchY);
 	}
 
 	renderer.render(scene, camera);
