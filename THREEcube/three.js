@@ -43,11 +43,8 @@ function init() {
 	fieldOfView = 60;
 	nearPlane = 1;
 	farPlane = 2000;
-	camera = new THREE.PerspectiveCamera(
-		fieldOfView,
-		aspectRatio,
-		nearPlane,
-		farPlane);
+	camera = new THREE.PerspectiveCamera(fieldOfView, aspectRatio,
+		nearPlane, farPlane);
 	camera.position.z = 800;
 	camera.position.y = 0;
 	camera.lookAt(new THREE.Vector3(0, 0, 0));
