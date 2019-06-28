@@ -13,12 +13,12 @@ function Particle(x, y) {
 	this.y = y;
 	this.dx = ((Math.random() * 1) - 0.5) * particleSpeedX;
 	this.dy = ((Math.random() * 1) - 0.5) * particleSpeedY;
-	this.red = (Math.random() * 510) - 250;
-	this.addred = (Math.random() * 2) + 2;
-	this.green = (Math.random() * 510) - 250;
-	this.addgreen = (Math.random() * 2) + 2;
-	this.blue = (Math.random() * 510) - 250;
-	this.addblue = (Math.random() * 2) + 2;
+	this.red = (Math.random() * 255);
+	this.addred = (Math.random() * 4) - 2;
+	this.green = (Math.random() * 255);
+	this.addgreen = (Math.random() * 4) - 2;
+	this.blue = (Math.random() * 255);
+	this.addblue = (Math.random() * 4) - 2;
 }
 
 Particle.prototype.move = function() {
@@ -47,7 +47,6 @@ Particle.prototype.draw_line = function(x2, y2) {
 	if (distance < 200)
 	{
 		ctx.beginPath();
-		//ctx.strokeStyle = convertHex(getColor(), (150 - distance) * .5);
 		ctx.strokeStyle = 'rgba('+this.red+','+this.green+','+this.blue+','
 			+parseFloat(((200 - distance) * 1)/200)+')';
 		ctx.lineWidth = 2;
