@@ -1,11 +1,18 @@
-var DAMPING = 0.995;
-var keyboard_space = false;
-var actual_colors = 0;
-var colors = [["#B80006", "#BF1607", "#C62D08", "#CD440A", "#D45A0B", "#DB710D", "#E2880E", "#E99E0F"],
+const DAMPING = 0.995;
+const display = document.getElementById('display');
+const ctx = display.getContext('2d');
+const particles = [];
+const width = display.width = window.innerWidth - 100;
+const height = display.height = window.innerHeight - 100;
+const mouse = { x: width * 0.5, y: height * 0.5 };
+const colors = [["#B80006", "#BF1607", "#C62D08", "#CD440A", "#D45A0B", "#DB710D", "#E2880E", "#E99E0F"],
 				["#00852A", "#13912C", "#269D2F", "#39A932", "#4CB535", "#5FC238", "#72CE3B", "#85DA3E"],
 				["#0000A2", "#0020A9", "#0040B0", "#005EBE", "#007CCC", "#009ADA", "#00B8E8", "#00D6FA"],
 				["#9A11E1", "#8922DD", "#7833D9", "#6744D5", "#5656D2", "#4467CE", "#3378CA", "#2289C6"],
 				["#897F33", "#9A8F45", "#ABA056", "#BBB067", "#CCC079", "#DDD18A", "#EEE19B", "#FFF2AD"]];
+
+let keyboard_space = false;
+let actual_colors = 0;
 
 function Particle(x, y) {
 	this.x = this.oldX = x;
@@ -68,21 +75,6 @@ Particle.prototype.draw = function() {
 	ctx.stroke();
 };
 
-var display = document.getElementById('display');
-var ctx = display.getContext('2d');
-var particles = [];
-var width = display.width = window.innerWidth - 100;
-var height = display.height = window.innerHeight - 100;
-var mouse = { x: width * 0.5, y: height * 0.5 };
-
-for (var i = 0; i < 1000; i++) {
-	particles[i] = new Particle(Math.random() * width, Math.random() * height);
-}
-
-display.addEventListener("mousemove", onMousemove);
-document.addEventListener("keydown", keyDownHandler, false);
-document.addEventListener("keyup", keyUpHandler, false);
-
 function onMousemove(e) {
 	mouse.x = e.clientX - display.offsetLeft;
 	mouse.y = e.clientY - display.offsetTop;
@@ -100,6 +92,14 @@ function keyDownHandler(e) {
 function keyUpHandler(e) {
 	if(e.keyCode == 32)
 		keyboard_space = false;
+}
+
+display.addEventListener("mousemove", onMousemove);
+document.addEventListener("keydown", keyDownHandler, false);
+document.addEventListener("keyup", keyUpHandler, false);
+
+for (var i = 0; i < 1000; i++) {
+	particles[i] = new Particle(Math.random() * width, Math.random() * height);
 }
 
 requestAnimationFrame(frame);
