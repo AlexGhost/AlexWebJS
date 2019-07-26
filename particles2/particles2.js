@@ -7,6 +7,9 @@ const mouse = { x: width * 0.5, y: height * 0.5 };
 const particleSpeedX = 5;
 const particleSpeedY = .5;
 let keyboard_space = false;
+let mode = 0;
+
+const nbParticles = 300;
 
 function Particle(x, y) {
 	this.x = x;
@@ -19,6 +22,7 @@ function Particle(x, y) {
 	this.addgreen = (Math.random() * 4) - 2;
 	this.blue = (Math.random() * 255);
 	this.addblue = (Math.random() * 4) - 2;
+	this.alpha = 0;
 }
 
 Particle.prototype.move = function() {
@@ -35,20 +39,26 @@ Particle.prototype.move = function() {
 };
 
 Particle.prototype.draw = function() {
-	ctx.beginPath();
-	ctx.arc(this.x, this.y, 2, 0, Math.PI * 2, false);
-	ctx.fillStyle = 'white';
-	ctx.fill();
-	ctx.closePath();
+	if (mode == 1)
+		this.alpha = Math.sqrt(Math.abs(this.x - mouse.x) * Math.abs(this.x - mouse.x)
+			+ Math.abs(this.y - mouse.y) * Math.abs(this.y - mouse.y));
+	else
+		this.alpha = 0;
+	if (this.alpha < 300) {
+		ctx.beginPath();
+		ctx.arc(this.x, this.y, 2, 0, Math.PI * 2, false);
+		ctx.fillStyle = 'rgba('+255+','+255+','+255+','+parseFloat((300 - this.alpha) / 100)+')';
+		ctx.fill();
+		ctx.closePath();
+	}
 };
 
 Particle.prototype.draw_line = function(x2, y2) {
-	var distance = Math.sqrt(Math.abs(this.x - x2) * Math.abs(this.x - x2) + Math.abs(this.y - y2) * Math.abs(this.y - y2));
-	if (distance < 200)
-	{
+	const distance = Math.sqrt(Math.abs(this.x - x2) * Math.abs(this.x - x2) + Math.abs(this.y - y2) * Math.abs(this.y - y2));
+	if (distance < 200 && this.alpha < 200) {
 		ctx.beginPath();
 		ctx.strokeStyle = 'rgba('+this.red+','+this.green+','+this.blue+','
-			+parseFloat(((200 - distance) * 1)/200)+')';
+			+parseFloat((200 - distance) / 200)+')';
 		ctx.lineWidth = 2;
 		ctx.moveTo(this.x, this.y);
 		ctx.lineTo(x2, y2);
@@ -75,11 +85,11 @@ function convertHex(hex, opacity) {
 	return result;
 }
 
-for (var i = 0; i < 200; i++) {
+for (var i = 0; i < nbParticles; i++) {
 	particles[i] = new Particle(Math.random() * width, Math.random() * height);
 }
 
-/*display.addEventListener("mousemove", onMousemove);
+display.addEventListener("mousemove", onMousemove);
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 
@@ -92,9 +102,9 @@ function keyDownHandler(e)
 {
 	if(e.keyCode == 32 && keyboard_space == false)
 	{
-		actual_color++;
-		if (actual_color > 4)
-			actual_color = 0;
+		mode++;
+		if (mode > 1)
+			mode = 0;
 		keyboard_space = true;
 	}
 }
@@ -103,7 +113,7 @@ function keyUpHandler(e)
 {
 	if(e.keyCode == 32)
 		keyboard_space = false;
-}*/
+}
 
 requestAnimationFrame(frame);
 
