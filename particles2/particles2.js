@@ -7,6 +7,7 @@ const mouse = { x: width * 0.5, y: height * 0.5 };
 const particleSpeedX = 5;
 const particleSpeedY = .5;
 let keyboard_space = false;
+let keyboard_reset = false;
 let mode = 0;
 
 const nbParticles = 300;
@@ -85,8 +86,10 @@ function convertHex(hex, opacity) {
 	return result;
 }
 
-for (var i = 0; i < nbParticles; i++) {
-	particles[i] = new Particle(Math.random() * width, Math.random() * height);
+function createParticles() {
+	for (var i = 0; i < nbParticles; i++) {
+		particles[i] = new Particle(Math.random() * width, Math.random() * height);
+	}
 }
 
 display.addEventListener("mousemove", onMousemove);
@@ -99,30 +102,36 @@ function onMousemove(e) {
 }
 
 function keyDownHandler(e) {
-	if(e.keyCode == 32 && keyboard_space == false) {
+	if (e.keyCode == 32 && keyboard_space == false) {
 		mode++;
 		if (mode > 1)
 			mode = 0;
 		keyboard_space = true;
+	} else if (e.keyCode == 82 && keyboard_reset == false) {
+		createParticles();
+		keyboard_reset = true;
 	}
 }
 
 function keyUpHandler(e) {
-	if(e.keyCode == 32)
-		keyboard_space = false;
+	if (e.keyCode == 32) keyboard_space = false;
+	else if (e.keyCode == 82) keyboard_reset = false;
 }
 
+createParticles();
 requestAnimationFrame(frame);
 
 function frame() {
 	requestAnimationFrame(frame);
 	ctx.clearRect(0, 0, width, height);
 	for (var i = 0; i < particles.length; i++) {
+		// THINK
 		particles[i].move();
 		particles[i].changeColors();
+		// DRAW
 		for (var j = i + 1; j < particles.length; j++) {
 			particles[i].draw_line(particles[j].x, particles[j].y);
 		}
-	particles[i].draw();
+		particles[i].draw();
 	}
 }
