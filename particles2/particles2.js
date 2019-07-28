@@ -1,8 +1,8 @@
 const display = document.getElementById('display');
 const ctx = display.getContext('2d');
 const particles = [];
-const width = display.width = window.innerWidth - 100;
-const height = display.height = window.innerHeight - 100;
+const width = display.width = window.innerWidth - 24;
+const height = display.height = window.innerHeight - 24;
 const mouse = { x: width * 0.5, y: height * 0.5 };
 const particleSpeedX = 5;
 const particleSpeedY = .5;
@@ -14,8 +14,8 @@ const nbParticles = 300;
 function Particle(x, y) {
 	this.x = x;
 	this.y = y;
-	this.dx = ((Math.random() * 1) - 0.5) * particleSpeedX;
-	this.dy = ((Math.random() * 1) - 0.5) * particleSpeedY;
+	this.dx = (Math.random() - 0.5) * particleSpeedX;
+	this.dy = (Math.random() - 0.5) * particleSpeedY;
 	this.red = (Math.random() * 255);
 	this.addred = (Math.random() * 4) - 2;
 	this.green = (Math.random() * 255);
@@ -59,7 +59,7 @@ Particle.prototype.draw_line = function(x2, y2) {
 		ctx.beginPath();
 		ctx.strokeStyle = 'rgba('+this.red+','+this.green+','+this.blue+','
 			+parseFloat((200 - distance) / 200)+')';
-		ctx.lineWidth = 2;
+		ctx.lineWidth = 2.5;
 		ctx.moveTo(this.x, this.y);
 		ctx.lineTo(x2, y2);
 		ctx.stroke();
@@ -98,10 +98,8 @@ function onMousemove(e) {
 	mouse.y = e.clientY - display.offsetTop;
 }
 
-function keyDownHandler(e)
-{
-	if(e.keyCode == 32 && keyboard_space == false)
-	{
+function keyDownHandler(e) {
+	if(e.keyCode == 32 && keyboard_space == false) {
 		mode++;
 		if (mode > 1)
 			mode = 0;
@@ -109,8 +107,7 @@ function keyDownHandler(e)
 	}
 }
 
-function keyUpHandler(e)
-{
+function keyUpHandler(e) {
 	if(e.keyCode == 32)
 		keyboard_space = false;
 }
