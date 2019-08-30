@@ -30,6 +30,7 @@ Cube = function(color, posX, posY, reactionTime) {
 
 	var bodyGeom = new THREE.BoxGeometry(80, 80, 80);
 	this.body = new THREE.Mesh(bodyGeom, this.bodyMat);
+	this.body.receiveShadow = false;
 
 	var eyeBallGeom = new THREE.BoxGeometry(20, 20, 10);
 	this.eyeBall1 = new THREE.Mesh(eyeBallGeom, this.eyeBallMat);

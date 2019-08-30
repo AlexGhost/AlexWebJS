@@ -40,7 +40,7 @@ function init() {
 	HEIGHT = window.innerHeight;
 	WIDTH = window.innerWidth;
 	aspectRatio = WIDTH / HEIGHT;
-	fieldOfView = 60;
+	fieldOfView = 50;
 	nearPlane = 1;
 	farPlane = 2000;
 	camera = new THREE.PerspectiveCamera(fieldOfView, aspectRatio,
