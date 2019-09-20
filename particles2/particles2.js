@@ -5,24 +5,31 @@ const width = display.width = window.innerWidth - 24;
 const height = display.height = window.innerHeight - 24;
 const mouse = { x: width * 0.5, y: height * 0.5 };
 const particleSpeedX = 5;
-const particleSpeedY = .5;
+const particleSpeedY = 1;
 let keyboard_space = false;
 let keyboard_reset = false;
 let mode = 0;
 
-const nbParticles = 300;
+const nbParticles = 200;
 
 function Particle(x, y) {
 	this.x = x;
 	this.y = y;
 	this.dx = (Math.random() - 0.5) * particleSpeedX;
 	this.dy = (Math.random() - 0.5) * particleSpeedY;
-	this.red = (Math.random() * 255);
-	this.addred = (Math.random() * 4) - 2;
-	this.green = (Math.random() * 255);
-	this.addgreen = (Math.random() * 4) - 2;
-	this.blue = (Math.random() * 255);
-	this.addblue = (Math.random() * 4) - 2;
+	// this.addred = (Math.random() * 4) - 2;
+	// this.addgreen = (Math.random() * 4) - 2;
+	// this.addblue = (Math.random() * 4) - 2;
+	// this.red = (Math.random() * 255);
+	// this.green = (Math.random() * 255);
+	// this.blue = (Math.random() * 255);
+	// this.alpha = 0;
+	this.addred = 1.5;
+	this.addgreen = 1;
+	this.addblue = .5;
+	this.red = (Math.random() * 100) + 155;
+	this.green = (Math.random() * 120);
+	this.blue = (Math.random() * 50);
 	this.alpha = 0;
 }
 
