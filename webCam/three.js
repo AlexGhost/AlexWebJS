@@ -46,7 +46,6 @@ const init = () => {
     } : null);
 
     if (navigator.mediaDevices) {
-        // initAudio();
         initVideo();
     } else {
         showAlert();
@@ -90,33 +89,6 @@ const initVideo = () => {
             showAlert();
         });
 };
-
-// const initAudio = () => {
-//     const audioListener = new THREE.AudioListener();
-//     audio = new THREE.Audio(audioListener);
-
-//     const audioLoader = new THREE.AudioLoader();
-//     audioLoader.load('daftpunk.mp3', (buffer) => {
-//         document.body.classList.remove(classNameForLoading);
-
-//         audio.setBuffer(buffer);
-//         audio.setLoop(true);
-//         audio.setVolume(0.5);
-//         audio.play();
-//     });
-
-//     analyser = new THREE.AudioAnalyser(audio, fftSize);
-
-//     document.body.addEventListener('click', function () {
-//         if (audio) {
-//             if (audio.isPlaying) {
-//                 audio.pause();
-//             } else {
-//                 audio.play();
-//             }
-//         }
-//     });
-// };
 
 const createParticles = () => {
     const imageData = getImageData(video);
@@ -163,56 +135,14 @@ const getImageData = (image, useCache) => {
     return imageCache;
 };
 
-/**
- * https://github.com/processing/p5.js-sound/blob/v0.14/lib/p5.sound.js#L1765
- *
- * @param data
- * @param _frequencyRange
- * @returns {number} 0.0 ~ 1.0
- */
-// const getFrequencyRangeValue = (data, _frequencyRange) => {
-//     const nyquist = 48000 / 2;
-//     const lowIndex = Math.round(_frequencyRange[0] / nyquist * data.length);
-//     const highIndex = Math.round(_frequencyRange[1] / nyquist * data.length);
-//     let total = 0;
-//     let numFrequencies = 0;
-
-//     for (let i = lowIndex; i <= highIndex; i++) {
-//         total += data[i];
-//         numFrequencies += 1;
-//     }
-//     return total / numFrequencies / 255;
-// };
-
 const draw = (t) => {
     clock.getDelta();
-    // const time = clock.elapsedTime;
-
-    let r, g, b;
-
-    // audio
-    // if (analyser) {
-    //     // analyser.getFrequencyData() would be an array with a size of half of fftSize.
-    //     const data = analyser.getFrequencyData();
-
-    //     const bass = getFrequencyRangeValue(data, frequencyRange.bass);
-    //     const mid = getFrequencyRangeValue(data, frequencyRange.mid);
-    //     const treble = getFrequencyRangeValue(data, frequencyRange.treble);
-
-    //     r = bass;
-    //     g = mid;
-    //     b = treble;
-	// }
-	
-	r = .1;
-	g = .1;
-	b = .1;
 
     // video
     if (particles) {
-        particles.material.color.r = 1 - r;
-        particles.material.color.g = 1 - g;
-        particles.material.color.b = 1 - b;
+        particles.material.color.r = 1;
+        particles.material.color.g = 1;
+        particles.material.color.b = 1;
 
         const density = 2;
         const useCache = parseInt(t) % 2 === 0;  // To reduce CPU usage.
@@ -228,11 +158,11 @@ const draw = (t) => {
             let threshold = 300;
             if (gray < threshold) {
                 if (gray < threshold / 3) {
-                    particle.z = gray * r * 5;
+                    particle.z = gray * 1;
                 } else if (gray < threshold / 2) {
-                    particle.z = gray * g * 5;
+                    particle.z = gray * 1;
                 } else {
-                    particle.z = gray * b * 5;
+                    particle.z = gray * 1;
                 }
             } else {
                 particle.z = 10000;
@@ -259,6 +189,15 @@ const onResize = () => {
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
 };
+
+function componentToHex(c) {
+    var hex = c.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
+}
+  
+function rgbToHex(r, g, b) {
+    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+}
 
 window.addEventListener("resize", onResize);
 
