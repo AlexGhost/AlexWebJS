@@ -55,7 +55,7 @@ const init = () => {
 };
 
 const initCamera = () => {
-    const fov = 45;
+    const fov = 30;
     const aspect = width / height;
 
     camera = new THREE.PerspectiveCamera(fov, aspect, 0.1, 10000);
@@ -100,8 +100,8 @@ const createParticles = () => {
         sizeAttenuation: false
     });
 
-    for (let y = 0, height = imageData.height; y < height; y += 1) {
-        for (let x = 0, width = imageData.width; x < width; x += 1) {
+    for (let y = 0; y < imageData.height; y += 1) {
+        for (let x = 0; x < imageData.width; x += 1) {
             const vertex = new THREE.Vector3(
                 x - imageData.width / 2,
                 -y + imageData.height / 2,
@@ -144,10 +144,10 @@ const draw = (t) => {
         particles.material.color.g = 1;
         particles.material.color.b = 1;
 
-        const density = 2;
+        const density = 1;
         const useCache = parseInt(t) % 2 === 0;  // To reduce CPU usage.
         const imageData = getImageData(video, useCache);
-        for (let i = 0, length = particles.geometry.vertices.length; i < length; i++) {
+        for (let i = 0; i < particles.geometry.vertices.length; i++) {
             const particle = particles.geometry.vertices[i];
             if (i % density !== 0) {
                 particle.z = 10000;
@@ -155,18 +155,7 @@ const draw = (t) => {
             }
             let index = i * 4;
             let gray = (imageData.data[index] + imageData.data[index + 1] + imageData.data[index + 2]) / 3;
-            let threshold = 300;
-            if (gray < threshold) {
-                if (gray < threshold / 3) {
-                    particle.z = gray * 1;
-                } else if (gray < threshold / 2) {
-                    particle.z = gray * 1;
-                } else {
-                    particle.z = gray * 1;
-                }
-            } else {
-                particle.z = 10000;
-            }
+            particle.z = gray;
         }
         particles.geometry.verticesNeedUpdate = true;
     }
