@@ -11,17 +11,6 @@ const ctx = canvas.getContext("2d");
 
 const classNameForLoading = "loading";
 
-// audio
-let audio, analyser;
-const fftSize = 2048;  // https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode/fftSize
-const frequencyRange = {
-    bass: [20, 140],
-    lowMid: [140, 400],
-    mid: [400, 2600],
-    highMid: [2600, 5200],
-    treble: [5200, 14000],
-};
-
 const init = () => {
     document.body.classList.add(classNameForLoading);
 
