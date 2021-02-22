@@ -1,8 +1,19 @@
 const studentsJson = {
-    "acourtin": 1,
-    "rfautier": 2,
-    "alerandy": 3,
-    "tlernoul": 4,
+	"acourtin": 1,
+	"rfautier": 2,
+	"alerandy": 3,
+	"tlernoul": 4,
+	"gsmith": 5,
+	"esuits": 6,
+	"fle-roy": 7,
+	"lolivet": 8,
+	"roddavid": 9,
+	"baudiber": 10,
+	"ehouzard": 11,
+	"aleduc": 12,
+	"cbesse": 13,
+	"charly": 14,
+	"acourtin": 15,
 }
 
 function onWindowResize() {
@@ -40,6 +51,8 @@ var HEIGHT,
 	windowHalfY,
 	dist = 0;
 
+var date;
+
 //INIT THREE JS, SCREEN AND MOUSE EVENTS
 function init() {
 	scene = new THREE.Scene();
@@ -63,12 +76,7 @@ function init() {
 	windowHalfX = WIDTH / 2;
 	windowHalfY = HEIGHT / 2;
 	window.addEventListener('resize', onWindowResize, false);
-	// document.addEventListener('mousemove', handleMouseMove, false);
-	/*document.addEventListener('mousedown', handleMouseDown, false);
-	document.addEventListener('mouseup', handleMouseUp, false);*/
-	// document.addEventListener('touchstart', handleTouchStart, false);
-	// document.addEventListener('touchend', handleTouchEnd, false);
-	// document.addEventListener('touchmove',handleTouchMove, false);
+	date = Date.now() * 0.0001;
 }
 
 function createStudents() {
@@ -85,7 +93,7 @@ function createStudents() {
 //LOGIC FUNCTIONS
 function loop() {
 	students.forEach((stu) => {
-		stu.move();
+		stu.move(date);
 	});
 	renderer.render(scene, camera);
 	requestAnimationFrame(loop);
