@@ -111,9 +111,8 @@ function init() {
 
 function createStudents() {
 	let i = 0;
-	let j = 0;
-
-	while (j < 1) {
+	// let j = 0;
+	// while (j < 20) {
 		for (let key in studentsJson) {
 			let value = studentsJson[key];
 			students[i] = new Student(key, value, numOnOrbit[value]);
@@ -121,8 +120,8 @@ function createStudents() {
 			scene.add(students[i].threegroup);
 			i++;
 		}
-		j++;
-	}
+		// j++;
+	// }
 }
 
 //LOGIC FUNCTIONS
