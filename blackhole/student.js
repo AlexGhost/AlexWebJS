@@ -28,7 +28,7 @@ Student = function(name, intValue, offset) {
 
 	this.randomRotation = getRandomInt(-100, 101);
 	this.threegroup.rotation.z = getRandomInt(0, 360);
-	this.theta -= this.dTheta * (1100 * offset);
+	this.theta -= this.dTheta * ((1100 * offset) + 1000 * this.intValue);
 }
 
 Student.prototype.move = function() {
