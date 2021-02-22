@@ -1,8 +1,14 @@
+function getRandomInt(min, max) {
+	min = Math.ceil(min);
+	max = Math.floor(max);
+	return Math.floor(Math.random() * (max - min)) + min;
+}
+
 Student = function(name, intValue) {
 	this.threegroup = new THREE.Group();
 
 	this.intValue = intValue;
-	this.r = 40 * intValue;
+	this.r = 90 + (this.intValue * 40);
 	this.theta = 0;
 	this.dTheta = Math.PI / 1000;
 
@@ -19,12 +25,15 @@ Student = function(name, intValue) {
 	this.body.receiveShadow = false;
 
 	this.threegroup.add(this.body);
-	this.threegroup.position.x = 0;
-	this.threegroup.position.y = 0;
+
+	this.randomRotation = getRandomInt(-100, 101);
+	this.threegroup.rotation.z = getRandomInt(0, 360);
+	this.theta -= this.dTheta * getRandomInt(0, 100000);
 }
 
 Student.prototype.move = function() {
-	// this.theta -= this.dTheta * (16 - this.intValue) * .5;
+	this.theta -= this.dTheta * (16 - this.intValue) * .1;
+	this.threegroup.rotation.z += this.randomRotation * (16 - this.intValue) * .00005;
 	this.threegroup.position.x = this.r * Math.cos(this.theta);
 	this.threegroup.position.y = this.r * Math.sin(this.theta);
 }

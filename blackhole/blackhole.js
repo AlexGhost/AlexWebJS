@@ -13,7 +13,7 @@ const studentsJson = {
 	"aleduc": 12,
 	"cbesse": 13,
 	"charly": 14,
-	"acourtin": 15,
+	"norminet": 15,
 }
 
 function onWindowResize() {
@@ -76,24 +76,27 @@ function init() {
 	windowHalfX = WIDTH / 2;
 	windowHalfY = HEIGHT / 2;
 	window.addEventListener('resize', onWindowResize, false);
-	date = Date.now() * 0.0001;
 }
 
 function createStudents() {
 	let i = 0;
+	let j = 0;
 
-	for (let key in studentsJson) {
-		let value = studentsJson[key];
-		students[i] = new Student(key, value);
-		scene.add(students[i].threegroup);
-		i++;
+	while (j < 1) {
+		for (let key in studentsJson) {
+			let value = studentsJson[key];
+			students[i] = new Student(key, value);
+			scene.add(students[i].threegroup);
+			i++;
+		}
+		j++;
 	}
 }
 
 //LOGIC FUNCTIONS
 function loop() {
 	students.forEach((stu) => {
-		stu.move(date);
+		stu.move();
 	});
 	renderer.render(scene, camera);
 	requestAnimationFrame(loop);
