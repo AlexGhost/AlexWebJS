@@ -4,7 +4,7 @@ function getRandomInt(min, max) {
 	return Math.floor(Math.random() * (max - min)) + min;
 }
 
-Student = function(name, intValue) {
+Student = function(name, intValue, offset) {
 	this.threegroup = new THREE.Group();
 
 	this.intValue = intValue;
@@ -28,7 +28,7 @@ Student = function(name, intValue) {
 
 	this.randomRotation = getRandomInt(-100, 101);
 	this.threegroup.rotation.z = getRandomInt(0, 360);
-	this.theta -= this.dTheta * getRandomInt(0, 100000);
+	this.theta -= this.dTheta * (1100 * offset);
 }
 
 Student.prototype.move = function() {

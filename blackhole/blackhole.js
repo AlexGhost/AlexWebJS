@@ -16,6 +16,24 @@ const studentsJson = {
 	"norminet": 15,
 }
 
+const numOnOrbit = {
+	1: 0,
+	2: 0,
+	3: 0,
+	4: 0,
+	5: 0,
+	6: 0,
+	7: 0,
+	8: 0,
+	9: 0,
+	10: 0,
+	11: 0,
+	12: 0,
+	13: 0,
+	14: 0,
+	15: 0,
+}
+
 function onWindowResize() {
 	HEIGHT = window.innerHeight;
 	WIDTH = window.innerWidth;
@@ -76,6 +94,19 @@ function init() {
 	windowHalfX = WIDTH / 2;
 	windowHalfY = HEIGHT / 2;
 	window.addEventListener('resize', onWindowResize, false);
+
+	threegroup = new THREE.Group();
+
+	body = new THREE.Mesh(
+		new THREE.CircleGeometry(100, 15),
+		new THREE.MeshBasicMaterial({
+			color: 0x000000
+		})
+	);
+	body.receiveShadow = false;
+
+	threegroup.add(this.body);
+	scene.add(threegroup);
 }
 
 function createStudents() {
@@ -85,7 +116,8 @@ function createStudents() {
 	while (j < 1) {
 		for (let key in studentsJson) {
 			let value = studentsJson[key];
-			students[i] = new Student(key, value);
+			students[i] = new Student(key, value, numOnOrbit[value]);
+			numOnOrbit[value] += 1;
 			scene.add(students[i].threegroup);
 			i++;
 		}
