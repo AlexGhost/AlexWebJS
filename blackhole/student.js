@@ -31,10 +31,11 @@ Student = function(name, intValue, offset, maxStud) {
 	this.threegroup.rotation.z = getRandomInt(0, 360);
 	let tmp = 200 / maxStud
 	this.theta -= this.dTheta * offset * tmp * 10;
+	this.moveControl = ((16 - this.intValue) * (16 - this.intValue)) * .005;
 }
 
 Student.prototype.move = function() {
-	this.theta -= this.dTheta * (16 - this.intValue) * .1;
+	this.theta -= this.dTheta * this.moveControl;
 	this.threegroup.rotation.z += this.randomRotationZ * (16 - this.intValue) * .0005;
 	this.threegroup.position.x = this.r * Math.cos(this.theta);
 	this.threegroup.position.y = this.r * Math.sin(this.theta);
