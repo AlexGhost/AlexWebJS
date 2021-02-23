@@ -34,6 +34,34 @@ const numOnOrbit = {
 	15: 0,
 }
 
+let jsonCount = {
+	1: 0,
+	2: 0,
+	3: 0,
+	4: 0,
+	5: 0,
+	6: 0,
+	7: 0,
+	8: 0,
+	9: 0,
+	10: 0,
+	11: 0,
+	12: 0,
+	13: 0,
+	14: 0,
+	15: 0,
+}
+
+const testJ = 1;
+
+let j = 0;
+while (j < testJ) {
+	for (let key in studentsJson) {
+		let value = studentsJson[key];
+		jsonCount[value]++;
+	}
+	j++;
+}
 window.addEventListener('click', onDocumentMouseDown, false);
 
 function onWindowResize() {
@@ -122,10 +150,10 @@ function init() {
 function createStudents() {
 	let i = 0;
 	let j = 0;
-	while (j < 20) {
+	while (j < testJ) {
 		for (let key in studentsJson) {
 			let value = studentsJson[key];
-			students[i] = new Student(key, value, numOnOrbit[value]);
+			students[i] = new Student(key, value, numOnOrbit[value], jsonCount[value]);
 			numOnOrbit[value] += 1;
 			scene.add(students[i].threegroup);
 			i++;
