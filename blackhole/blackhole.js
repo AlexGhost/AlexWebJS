@@ -95,18 +95,18 @@ function init() {
 	windowHalfY = HEIGHT / 2;
 	window.addEventListener('resize', onWindowResize, false);
 
-	threegroup = new THREE.Group();
+	blackholeGroup = new THREE.Group();
 
-	body = new THREE.Mesh(
-		new THREE.CircleGeometry(100, 15),
+	blackholeBody = new THREE.Mesh(
+		new THREE.CircleGeometry(40, 15),
 		new THREE.MeshBasicMaterial({
 			color: 0x000000
 		})
 	);
-	body.receiveShadow = false;
+	blackholeBody.receiveShadow = false;
 
-	threegroup.add(this.body);
-	scene.add(threegroup);
+	blackholeGroup.add(blackholeBody);
+	scene.add(blackholeGroup);
 }
 
 function createStudents() {
@@ -120,7 +120,7 @@ function createStudents() {
 			scene.add(students[i].threegroup);
 			i++;
 		}
-		// j++;
+	// 	j++;
 	// }
 }
 
