@@ -45,7 +45,7 @@ Particle = function(offset) {
 	this.x = 0;
 	this.y = 0;
 	this.offset = offset;
-	this.r = getRandomInt(0, offset * .0075) + 10;
+	this.r = getRandomInt(0, offset * .008) + 50;
 	this.theta = 0;
 	this.dTheta = Math.PI / 1000;
 
