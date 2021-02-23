@@ -61,6 +61,7 @@ let jsonCount = {
 	}
 // }
 window.addEventListener('mousedown', onDocumentMouseDown, false);
+window.addEventListener('mousemove', onDocumentMouseMove, false);
 
 function onWindowResize() {
 	HEIGHT = window.innerHeight;
@@ -172,23 +173,40 @@ function loop() {
 	requestAnimationFrame(loop);
 }
 
-var raycaster = new THREE.Raycaster();
 var mouse = new THREE.Vector2();
+var raycaster = new THREE.Raycaster();
+let selectedName = '';
+let selectedGroup = null;
+
+function onDocumentMouseMove( event ) {
+	event.preventDefault();
+	mouse.x = ( event.clientX / WIDTH ) * 2 - 1;
+	mouse.y = - ( event.clientY / HEIGHT ) * 2 + 1;
+	raycaster.setFromCamera( mouse, camera );
+	var intersects = raycaster.intersectObjects( students.map((s) => {return s.threegroup.children[0]}) );
+	if ( intersects.length > 0 ) {
+		students.forEach((s) => {
+			if (intersects[0].object.parent == s.threegroup) {
+				selectedName = s.name;
+				if (selectedGroup) selectedGroup.scale.set(1, 1, 1);
+				selectedGroup = s.threegroup;
+				selectedGroup.scale.set(2, 2, 2);
+			}
+		});
+	} else {
+		selectedName = '';
+		if (selectedGroup) selectedGroup.scale.set(1, 1, 1);
+		selectedGroup = null;
+	}
+}
 
 function onDocumentMouseDown( event ) {
-event.preventDefault();
-mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
-mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
-raycaster.setFromCamera( mouse, camera );
-var intersects = raycaster.intersectObjects( students.map((s) => {return s.threegroup.children[0]}) );
-if ( intersects.length > 0 ) {
-	students.forEach((s) => {
-		if (intersects[0].object.parent == s.threegroup) {
-			const url = 'https://profile.intra.42.fr/users/' + s.name;
-			window.open(url);
-		}
-	});
-}}
+	event.preventDefault();
+	if (selectedName != '') {
+		const url = 'https://profile.intra.42.fr/users/' + selectedName;
+		window.open(url);
+	}
+}
 
 //MAIN
 init();
