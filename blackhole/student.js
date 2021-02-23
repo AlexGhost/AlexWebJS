@@ -41,15 +41,18 @@ Student.prototype.move = function() {
 Particle = function(offset) {
 	this.x = 0;
 	this.y = 0;
-	this.r = getRandomInt(38, 1000);
+	this.offset = offset;
+	this.r = getRandomInt(0, offset * .1) + 38;
 	this.theta = 0;
 	this.dTheta = Math.PI / 1000;
 
-	this.theta -= this.dTheta * .5 * offset;
+	this.theta -= this.dTheta * 5 * offset;
 }
 
 Particle.prototype.move = function() {
-	this.theta -= this.dTheta * (this.r * .01) * .1;
+	const inverseR = 10000 - this.r;
+
+	this.theta -= (this.dTheta * inverseR * .0002 - (this.r * .000008));
 	this.x = this.r * Math.cos(this.theta);
 	this.y = this.r * Math.sin(this.theta);
 }

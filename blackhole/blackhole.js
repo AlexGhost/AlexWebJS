@@ -115,7 +115,7 @@ function init() {
 		geometry.vertices.push(
 		new THREE.Vector3(particles[i].x, particles[i].y));
 	}
-	var material = new THREE.PointsMaterial({color: 0xaaccff, size: 10});
+	var material = new THREE.PointsMaterial({color: 0xaaccff, size: 4});
 	particleSystem = new THREE.Points(geometry, material);
 	scene.add(particleSystem);
 }
