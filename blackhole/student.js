@@ -8,7 +8,7 @@ Student = function(name, intValue, offset) {
 	this.threegroup = new THREE.Group();
 
 	this.intValue = intValue;
-	this.r = 90 + (this.intValue * 40);
+	this.r = 60 + (this.intValue * 45);
 	this.theta = 0;
 	this.dTheta = Math.PI / 1000;
 
