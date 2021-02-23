@@ -8,7 +8,7 @@ Student = function(name, intValue, offset) {
 	this.threegroup = new THREE.Group();
 
 	this.intValue = intValue;
-	this.r = 60 + (this.intValue * 45);
+	this.r = 60 + (this.intValue * 60);
 	this.theta = 0;
 	this.dTheta = Math.PI / 1000;
 
@@ -42,7 +42,7 @@ Particle = function(offset) {
 	this.x = 0;
 	this.y = 0;
 	this.offset = offset;
-	this.r = getRandomInt(0, offset * .01) + 38;
+	this.r = getRandomInt(0, offset * .0075) + 10;
 	this.theta = 0;
 	this.dTheta = Math.PI / 1000;
 
@@ -50,8 +50,6 @@ Particle = function(offset) {
 }
 
 Particle.prototype.move = function() {
-	const inverseR = 10000 - this.r;
-
 	this.theta -= this.dTheta * this.r * .02;
 	this.x = this.r * Math.cos(this.theta);
 	this.y = this.r * Math.sin(this.theta);

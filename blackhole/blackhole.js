@@ -47,13 +47,10 @@ function onWindowResize() {
 //THREEJS RELATED VARIABLES
 var scene,
 	camera,
-	controls,
 	fieldOfView,
 	aspectRatio,
 	nearPlane,
 	farPlane,
-	light,
-	shadowLight,
 	renderer,
 	container;
 
@@ -85,7 +82,7 @@ function init() {
 	camera = new THREE.PerspectiveCamera(fieldOfView, aspectRatio,
 		nearPlane, farPlane);
 	camera.position.z = 800;
-	camera.position.y = 0;
+	camera.position.y = -500;
 	camera.lookAt(new THREE.Vector3(0, 0, 0));
 	renderer = new THREE.WebGLRenderer({alpha: true, antialias: false });
 	renderer.setPixelRatio( window.devicePixelRatio );
@@ -110,7 +107,7 @@ function init() {
 	scene.add(blackholeGroup);
 
 	var geometry = new THREE.Geometry();
-	for (var i = 0 ; i < 10000 ; i++) {
+	for (var i = 0 ; i < 20000 ; i++) {
 		particles[i] = new Particle(i);
 		geometry.vertices.push(
 		new THREE.Vector3(particles[i].x, particles[i].y));
@@ -143,7 +140,7 @@ function loop() {
 	particleSystem.geometry.verticesNeedUpdate = true;
 	for (var i = 0 ; i < particleSystem.geometry.vertices.length ; i++) {
 		particles[i].move();
-		particleSystem.geometry.vertices[i].set(particles[i].x, particles[i].y, 0);
+		particleSystem.geometry.vertices[i].set(particles[i].x, particles[i].y, -10);
 	}
 	renderer.render(scene, camera);
 	requestAnimationFrame(loop);
