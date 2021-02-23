@@ -61,6 +61,8 @@ var scene,
 var floor;
 
 var students = [];
+var particleSystem;
+var particles = [];
 
 //SCREEN VARIABLES
 var HEIGHT,
@@ -104,9 +106,18 @@ function init() {
 		})
 	);
 	blackholeBody.receiveShadow = false;
-
 	blackholeGroup.add(blackholeBody);
 	scene.add(blackholeGroup);
+
+	var geometry = new THREE.Geometry();
+	for (var i = 0 ; i < 10000 ; i++) {
+		particles[i] = new Particle(i);
+		geometry.vertices.push(
+		new THREE.Vector3(particles[i].x, particles[i].y));
+	}
+	var material = new THREE.PointsMaterial({color: 0xaaccff, size: 10});
+	particleSystem = new THREE.Points(geometry, material);
+	scene.add(particleSystem);
 }
 
 function createStudents() {
@@ -129,6 +140,11 @@ function loop() {
 	students.forEach((stu) => {
 		stu.move();
 	});
+	particleSystem.geometry.verticesNeedUpdate = true;
+	for (var i = 0 ; i < particleSystem.geometry.vertices.length ; i++) {
+		particles[i].move();
+		particleSystem.geometry.vertices[i].set(particles[i].x, particles[i].y, 0);
+	}
 	renderer.render(scene, camera);
 	requestAnimationFrame(loop);
 }
