@@ -180,8 +180,9 @@ let selectedGroup = null;
 
 function onDocumentMouseMove( event ) {
 	event.preventDefault();
-	mouse.x = ( event.clientX / WIDTH ) * 2 - 1;
-	mouse.y = - ( event.clientY / HEIGHT ) * 2 + 1;
+	const canvasBounds = renderer.domElement.getBoundingClientRect();
+	mouse.x = ( ( event.clientX - canvasBounds.left ) / ( canvasBounds.right - canvasBounds.left ) ) * 2 - 1;
+	mouse.y = - ( ( event.clientY - canvasBounds.top ) / ( canvasBounds.bottom - canvasBounds.top) ) * 2 + 1;
 	raycaster.setFromCamera( mouse, camera );
 	var intersects = raycaster.intersectObjects( students.map((s) => {return s.threegroup.children[0]}) );
 	if ( intersects.length > 0 ) {
