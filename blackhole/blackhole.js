@@ -125,7 +125,7 @@ function init() {
 	blackholeGroup = new THREE.Group();
 
 	blackholeBody = new THREE.Mesh(
-		new THREE.SphereGeometry( 50, 50, 50 ),
+		new THREE.SphereGeometry( 50, 30, 30 ),
 		new THREE.MeshBasicMaterial({
 			color: 0x000000
 		})
@@ -146,7 +146,7 @@ function init() {
 
 	for (let i = 0 ; i < 15 ; i++) {
 		let circleMat = new THREE.LineBasicMaterial( { color: 0xffffff } );
-		let circleGeo = new THREE.CircleGeometry( 220 + (50 * i), 100 );
+		let circleGeo = new THREE.CircleGeometry( 220 + (50 * i), 50 );
 		circleGeo.vertices.shift();
 		let lineObj = new THREE.LineLoop(circleGeo, circleMat);
 		lineObj.position.z = -1;
