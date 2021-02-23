@@ -112,7 +112,6 @@ function init() {
 		nearPlane, farPlane);
 	camera.position.z = 800;
 	camera.position.y = -500;
-	camera.lookAt(new THREE.Vector3(0, 0, 0));
 	renderer = new THREE.WebGLRenderer({alpha: true, antialias: false });
 	renderer.setPixelRatio( window.devicePixelRatio );
 	renderer.setSize(WIDTH, HEIGHT);
@@ -126,7 +125,7 @@ function init() {
 	blackholeGroup = new THREE.Group();
 
 	blackholeBody = new THREE.Mesh(
-		new THREE.SphereGeometry( 50, 10, 10 ),
+		new THREE.SphereGeometry( 50, 50, 50 ),
 		new THREE.MeshBasicMaterial({
 			color: 0x000000
 		})
@@ -178,6 +177,7 @@ function loop() {
 		particles[i].move();
 		particleSystem.geometry.vertices[i].set(particles[i].x, particles[i].y, -10);
 	}
+	camera.lookAt(new THREE.Vector3(mouse.x * 10, mouse.y * 10, 0));
 	renderer.render(scene, camera);
 	requestAnimationFrame(loop);
 }
