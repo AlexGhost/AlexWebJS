@@ -60,7 +60,7 @@ let jsonCount = {
 		jsonCount[value]++;
 	}
 // }
-window.addEventListener('click', onDocumentMouseDown, false);
+window.addEventListener('mousedown', onDocumentMouseDown, false);
 
 function onWindowResize() {
 	HEIGHT = window.innerHeight;
