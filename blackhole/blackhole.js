@@ -52,14 +52,14 @@ let jsonCount = {
 	15: 0,
 }
 
-// const testJ = 50;
+const testJ = 50;
 
-// for (let j = 0 ; j < testJ ; j++) {
+for (let j = 0 ; j < testJ ; j++) {
 	for (let key in studentsJson) {
 		let value = studentsJson[key];
 		jsonCount[value]++;
 	}
-// }
+}
 window.addEventListener('mousedown', onDocumentMouseDown, false);
 window.addEventListener('mousemove', onDocumentMouseMove, false);
 
@@ -144,11 +144,20 @@ function init() {
 	var material = new THREE.PointsMaterial({color: 0xffffff, size: 2});
 	particleSystem = new THREE.Points(geometry, material);
 	scene.add(particleSystem);
+
+	for (let i = 0 ; i < 15 ; i++) {
+		let circleMat = new THREE.LineBasicMaterial( { color: 0xffffff } );
+		let circleGeo = new THREE.CircleGeometry( 220 + (50 * i), 100 );
+		circleGeo.vertices.shift();
+		let lineObj = new THREE.LineLoop(circleGeo, circleMat);
+		lineObj.position.z = -1;
+		scene.add(lineObj);
+	}
 }
 
 function createStudents() {
 	let i = 0;
-	// for (let j = 0 ; j < testJ ; j++) {
+	for (let j = 0 ; j < testJ ; j++) {
 		for (let key in studentsJson) {
 			let value = studentsJson[key];
 			students[i] = new Student(key, value, numOnOrbit[value], jsonCount[value]);
@@ -156,7 +165,7 @@ function createStudents() {
 			scene.add(students[i].threegroup);
 			i++;
 		}
-	// }
+	}
 }
 
 //LOGIC FUNCTIONS
