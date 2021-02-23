@@ -42,7 +42,7 @@ Particle = function(offset) {
 	this.x = 0;
 	this.y = 0;
 	this.offset = offset;
-	this.r = getRandomInt(0, offset * .1) + 38;
+	this.r = getRandomInt(0, offset * .01) + 38;
 	this.theta = 0;
 	this.dTheta = Math.PI / 1000;
 
@@ -52,7 +52,7 @@ Particle = function(offset) {
 Particle.prototype.move = function() {
 	const inverseR = 10000 - this.r;
 
-	this.theta -= (this.dTheta * inverseR * .0002 - (this.r * .000008));
+	this.theta -= this.dTheta * this.r * .02;
 	this.x = this.r * Math.cos(this.theta);
 	this.y = this.r * Math.sin(this.theta);
 }

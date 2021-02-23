@@ -115,15 +115,15 @@ function init() {
 		geometry.vertices.push(
 		new THREE.Vector3(particles[i].x, particles[i].y));
 	}
-	var material = new THREE.PointsMaterial({color: 0xaaccff, size: 4});
+	var material = new THREE.PointsMaterial({color: 0xffffff, size: 2});
 	particleSystem = new THREE.Points(geometry, material);
 	scene.add(particleSystem);
 }
 
 function createStudents() {
 	let i = 0;
-	// let j = 0;
-	// while (j < 20) {
+	let j = 0;
+	while (j < 20) {
 		for (let key in studentsJson) {
 			let value = studentsJson[key];
 			students[i] = new Student(key, value, numOnOrbit[value]);
@@ -131,8 +131,8 @@ function createStudents() {
 			scene.add(students[i].threegroup);
 			i++;
 		}
-	// 	j++;
-	// }
+	j++;
+	}
 }
 
 //LOGIC FUNCTIONS
