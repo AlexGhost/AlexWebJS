@@ -41,11 +41,11 @@ Student.prototype.move = function() {
 	this.threegroup.position.y = this.r * Math.sin(this.theta);
 }
 
-Particle = function(offset) {
+Particle = function(offset, r) {
 	this.x = 0;
 	this.y = 0;
 	this.offset = offset;
-	this.r = getRandomInt(0, offset * .008) + 50;
+	this.r = r;
 	this.theta = 0;
 	this.dTheta = Math.PI / 1000;
 

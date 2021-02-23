@@ -135,12 +135,21 @@ function init() {
 	scene.add(blackholeGroup);
 
 	var geometry = new THREE.Geometry();
+	var colors = [];
 	for (var i = 0 ; i < 20000 ; i++) {
-		particles[i] = new Particle(i);
-		geometry.vertices.push(
-		new THREE.Vector3(particles[i].x, particles[i].y));
+		let r = getRandomInt(0, i * .008) + 50;
+		particles[i] = new Particle(i, r);
+		geometry.vertices.push(new THREE.Vector3(particles[i].x, particles[i].y));
+		let dist = r * 2;
+		colors[i] = new THREE.Color('rgb(' + dist + ', ' + dist * 2 + ', ' + 255 + ')');
 	}
-	var material = new THREE.PointsMaterial({color: 0xffffff, size: 2});
+	geometry.colors = colors;
+	let material = new THREE.PointsMaterial( {
+		size: 2,
+		transparent: false,
+		vertexColors: THREE.VertexColors
+	} );
+
 	particleSystem = new THREE.Points(geometry, material);
 	scene.add(particleSystem);
 
