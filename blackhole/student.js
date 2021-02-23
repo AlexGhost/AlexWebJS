@@ -5,6 +5,7 @@ function getRandomInt(min, max) {
 }
 
 Student = function(name, intValue, offset) {
+	this.name = name;
 	this.threegroup = new THREE.Group();
 
 	this.intValue = intValue;
@@ -12,7 +13,7 @@ Student = function(name, intValue, offset) {
 	this.theta = 0;
 	this.dTheta = Math.PI / 1000;
 
-	const texture = new THREE.TextureLoader().load( 'https://cdn.intra.42.fr/users/medium_' + name + '.jpg' );
+	const texture = new THREE.TextureLoader().load( 'https://cdn.intra.42.fr/users/small_' + name + '.jpg' );
 
 	this.img = new THREE.MeshBasicMaterial({
 		map: texture
@@ -26,14 +27,14 @@ Student = function(name, intValue, offset) {
 
 	this.threegroup.add(this.body);
 
-	this.randomRotation = getRandomInt(-10, 11);
+	this.randomRotationZ = getRandomInt(-10, 11);
 	this.threegroup.rotation.z = getRandomInt(0, 360);
 	this.theta -= this.dTheta * ((1100 * offset) + 1000 * this.intValue);
 }
 
 Student.prototype.move = function() {
 	this.theta -= this.dTheta * (16 - this.intValue) * .1;
-	this.threegroup.rotation.z += this.randomRotation * (16 - this.intValue) * .0005;
+	this.threegroup.rotation.z += this.randomRotationZ * (16 - this.intValue) * .0005;
 	this.threegroup.position.x = this.r * Math.cos(this.theta);
 	this.threegroup.position.y = this.r * Math.sin(this.theta);
 }

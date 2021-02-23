@@ -34,6 +34,8 @@ const numOnOrbit = {
 	15: 0,
 }
 
+window.addEventListener('click', onDocumentMouseDown, false);
+
 function onWindowResize() {
 	HEIGHT = window.innerHeight;
 	WIDTH = window.innerWidth;
@@ -97,7 +99,7 @@ function init() {
 	blackholeGroup = new THREE.Group();
 
 	blackholeBody = new THREE.Mesh(
-		new THREE.CircleGeometry(40, 15),
+		new THREE.SphereGeometry( 50, 10, 10 ),
 		new THREE.MeshBasicMaterial({
 			color: 0x000000
 		})
@@ -145,6 +147,24 @@ function loop() {
 	renderer.render(scene, camera);
 	requestAnimationFrame(loop);
 }
+
+var raycaster = new THREE.Raycaster();
+var mouse = new THREE.Vector2();
+
+function onDocumentMouseDown( event ) {
+event.preventDefault();
+mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
+mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+raycaster.setFromCamera( mouse, camera );
+var intersects = raycaster.intersectObjects( students.map((s) => {return s.threegroup.children[0]}) );
+if ( intersects.length > 0 ) {
+	students.forEach((s) => {
+		if (intersects[0].object.parent == s.threegroup) {
+			const url = 'https://profile.intra.42.fr/users/' + s.name;
+			window.open(url);
+		}
+	});
+}}
 
 //MAIN
 init();
